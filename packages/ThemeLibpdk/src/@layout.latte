@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {include "partial/head.latte"}
+</head>
+<body>
+<div class="uk-offcanvas-content">
+
+    {include "partial/header.latte"}
+    {include content}
+    {include "partial/footer.latte"}
+    <div id="offcanvas-push" uk-offcanvas="mode: slide; overlay: true">
+        <div class="uk-offcanvas-bar" id = "sidebar">
+            <button class="uk-offcanvas-close" type="button" uk-close></button>
+            <div class="menu-container">
+                <%- partial("_partial/inject_site_menu") %>
+                <ul class = "uk-text-left extra-items uk-width-1-1">
+                    <%
+                    for(let i = 0; i < apiCatalog.length; i++) {
+                        let catalogItem = apiCatalog[i];
+                    %>
+                    <li class="uk-width-1-1"><a href = <%- catalogItem.url %>><%- catalogItem.name %></a></li>
+                    <% } %>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

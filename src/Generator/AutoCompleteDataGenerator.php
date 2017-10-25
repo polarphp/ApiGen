@@ -41,6 +41,8 @@ final class AutoCompleteDataGenerator implements GeneratorInterface
             $this->configuration->getDestination() . DIRECTORY_SEPARATOR . 'elementlist.js',
             [
                 'autocompleteElements' => $this->autocompleteElements->getElements(),
+                'siteCategory' => $this->configuration->getOption('sitecategory'),
+                'apiCatalog'=> $this->configuration->getOption('apicatalog')
             ]
         );
     }

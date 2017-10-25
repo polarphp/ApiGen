@@ -52,6 +52,8 @@ final class FunctionsGenerator implements GeneratorInterface
                 'activePage' => self::NAME,
                 'pageTitle' => ucfirst(self::NAME),
                 self::NAME => $this->reflectionStorage->getFunctionReflections(),
+                'siteCategory' => $this->configuration->getOption('sitecategory'),
+                'apiCatalog'=> $this->configuration->getOption('apicatalog')
             ]
         );
     }

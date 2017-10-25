@@ -61,6 +61,8 @@ final class InterfaceGenerator implements GeneratorInterface
             [
                 'activePage' => 'interface',
                 'interface' => $interfaceReflection,
+                'siteCategory' => $this->configuration->getOption('sitecategory'),
+                'apiCatalog'=> $this->configuration->getOption('apicatalog')
             ]
         );
     }
@@ -82,6 +84,8 @@ final class InterfaceGenerator implements GeneratorInterface
                 'activePage' => 'interface',
                 'fileName' => $interfaceReflection->getFileName(),
                 'source' => $highlightedContent,
+                'siteCategory' => $this->configuration->getOption('sitecategory'),
+                'apiCatalog'=> $this->configuration->getOption('apicatalog')
             ]
         );
     }

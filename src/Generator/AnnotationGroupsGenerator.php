@@ -56,6 +56,8 @@ final class AnnotationGroupsGenerator implements GeneratorInterface
                 'methods' => $this->annotationReflectionCollector->getClassOrTraitMethodReflections($annotation),
                 'functions' => $this->annotationReflectionCollector->getFunctionReflections($annotation),
                 'properties' => $this->annotationReflectionCollector->getClassOrTraitPropertyReflections($annotation),
+                'siteCategory' => $this->configuration->getOption('sitecategory'),
+                'apiCatalog'=> $this->configuration->getOption('apicatalog')
             ]
         );
     }

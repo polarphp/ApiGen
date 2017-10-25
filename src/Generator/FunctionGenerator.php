@@ -69,6 +69,8 @@ final class FunctionGenerator implements GeneratorInterface
             [
                 'activePage' => 'function',
                 'function' => $reflectionFunction,
+                'siteCategory' => $this->configuration->getOption('sitecategory'),
+                'apiCatalog'=> $this->configuration->getOption('apicatalog')
             ]
         );
     }
@@ -93,6 +95,8 @@ final class FunctionGenerator implements GeneratorInterface
                 'activePage' => 'function',
                 'fileName' => $functionReflection->getFileName(),
                 'source' => $highlightedContent,
+                'siteCategory' => $this->configuration->getOption('sitecategory'),
+                'apiCatalog'=> $this->configuration->getOption('apicatalog')
             ]
         );
     }

@@ -57,6 +57,8 @@ final class NamespaceGenerator implements GeneratorInterface
                 'interfaces' => $namespaceReflectionCollector->getInterfaceReflections($namespace),
                 'traits' => $namespaceReflectionCollector->getTraitReflections($namespace),
                 'functions' => $namespaceReflectionCollector->getFunctionReflections($namespace),
+                'siteCategory' => $this->configuration->getOption('sitecategory'),
+                'apiCatalog'=> $this->configuration->getOption('apicatalog')
             ]
         );
     }

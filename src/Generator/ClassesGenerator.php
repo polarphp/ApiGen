@@ -52,6 +52,8 @@ final class ClassesGenerator implements GeneratorInterface
                 'activePage' => self::NAME,
                 'pageTitle' => ucfirst(self::NAME),
                 self::NAME => $this->reflectionStorage->getClassReflections(),
+                'siteCategory' => $this->configuration->getOption('sitecategory'),
+                'apiCatalog'=> $this->configuration->getOption('apicatalog')
             ]
         );
     }

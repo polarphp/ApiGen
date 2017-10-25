@@ -61,6 +61,8 @@ final class ExceptionGenerator implements GeneratorInterface
             [
                 'activePage' => 'exception',
                 'class' => $exceptionReflection,
+                'siteCategory' => $this->configuration->getOption('sitecategory'),
+                'apiCatalog'=> $this->configuration->getOption('apicatalog')
             ]
         );
     }
@@ -78,6 +80,8 @@ final class ExceptionGenerator implements GeneratorInterface
                 'activeClass' => $exceptionReflection,
                 'fileName' => $exceptionReflection->getFileName(),
                 'source' => $highlightedContent,
+                'siteCategory' => $this->configuration->getOption('sitecategory'),
+                'apiCatalog'=> $this->configuration->getOption('apicatalog')
             ]
         );
     }

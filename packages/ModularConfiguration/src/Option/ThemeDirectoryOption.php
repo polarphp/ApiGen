@@ -41,6 +41,8 @@ final class ThemeDirectoryOption implements OptionInterface
         }
 
         $candidates = [
+            getcwd() . '/packages/ThemeLibpdk/src',
+            __DIR__ . '/../../../../packages/ThemeLibpdk/src',
             getcwd() . '/packages/ThemeDefault/src',
             __DIR__ . '/../../../../packages/ThemeDefault/src',
         ];

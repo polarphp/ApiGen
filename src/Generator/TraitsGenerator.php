@@ -52,6 +52,8 @@ final class TraitsGenerator implements GeneratorInterface
                 'activePage' => self::NAME,
                 'pageTitle' => ucfirst(self::NAME),
                 self::NAME => $this->reflectionStorage->getTraitReflections(),
+                'siteCategory' => $this->configuration->getOption('sitecategory'),
+                'apiCatalog'=> $this->configuration->getOption('apicatalog')
             ]
         );
     }

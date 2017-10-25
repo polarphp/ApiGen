@@ -61,6 +61,8 @@ final class ClassGenerator implements GeneratorInterface
             [
                 'activePage' => 'class',
                 'class' => $classReflection,
+                'siteCategory' => $this->configuration->getOption('sitecategory'),
+                'apiCatalog'=> $this->configuration->getOption('apicatalog')
             ]
         );
     }
@@ -78,6 +80,8 @@ final class ClassGenerator implements GeneratorInterface
                 'activeClass' => $classReflection,
                 'fileName' => $classReflection->getFileName(),
                 'source' => $highlightedContent,
+                'siteCategory' => $this->configuration->getOption('sitecategory'),
+                'apiCatalog'=> $this->configuration->getOption('apicatalog')
             ]
         );
     }

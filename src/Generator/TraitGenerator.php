@@ -61,6 +61,8 @@ final class TraitGenerator implements GeneratorInterface
             [
                 'activePage' => 'trait',
                 'trait' => $traitReflection,
+                'siteCategory' => $this->configuration->getOption('sitecategory'),
+                'apiCatalog'=> $this->configuration->getOption('apicatalog')
             ]
         );
     }
@@ -79,6 +81,8 @@ final class TraitGenerator implements GeneratorInterface
                 'activePage' => 'trait',
                 'fileName' => $traitReflection->getFileName(),
                 'source' => $highlightedContent,
+                'siteCategory' => $this->configuration->getOption('sitecategory'),
+                'apiCatalog'=> $this->configuration->getOption('apicatalog')
             ]
         );
     }
