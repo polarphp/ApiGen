@@ -14,9 +14,13 @@
                         </div>
                         {if count($allNamespaces)}
                             <ul>
-                                <li n:foreach="$allNamespaces as $namespace">
-                                    <a href="{$namespace|linkNamespace}">{$namespace}</a>
-                                </li>
+                                {foreach $allNamespaces as $namespace}
+                                    {if $namespace != "none"}
+                                        <li>
+                                            <a href="{$namespace|linkNamespace}">{$namespace}</a>
+                                        </li>
+                                    {/if}
+                                {/foreach}
                             </ul>
                         {/if}
                     </div>

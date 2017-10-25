@@ -1,0 +1,24 @@
+{var $cls = !empty($namespaces) ? "section-item-container namespace-section-container" : "uk-hidden" }
+<div class="{$cls}">
+    <h3>subnamespaces</h3>
+    {foreach $namespaces as $namespace}
+        {var $parts = explode("\\", $namespace) }
+        {var $simpleName = array_pop($parts) }
+        <div class="uk-grid-small list-item" uk-grid>
+            <div class="uk-width-1-1 uk-width-1-4@s">
+                <a class="uk-text-break" href = "{$namespace|linkNamespace}">
+                    {if isset($showSimpleName) && $showSimpleName}
+                        {$namespace}
+                    {else}
+                        {$simpleName}
+                    {/if}
+                </a>
+            </div>
+            <div class="uk-width-1-1 uk-width-3-4@s">
+        <span>
+            {*<%- item.briefDescription %>*}
+        </span>
+            </div>
+        </div>
+    {/foreach}
+</div>

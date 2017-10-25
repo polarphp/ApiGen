@@ -45,11 +45,18 @@ final class NamespaceGenerator implements GeneratorInterface
         string $namespace,
         NamespaceReflectionCollector $namespaceReflectionCollector
     ): void {
+            $parts = explode("\\", $namespace);
+        if (count($parts) == 1) {
+            $simpleNamespace = $parts[0];
+        } else {
+            $simpleNamespace = array_pop($parts);
+        }
         $this->templateRenderer->renderToFile(
             $this->configuration->getTemplateByName('namespace'),
             $this->configuration->getDestinationWithPrefixName('namespace-', $namespace),
             [
                 'activePage' => 'namespace',
+                'simpleNamespace' => $simpleNamespace,
                 'activeNamespace' => $namespace,
                 'childNamespaces' => $this->resolveChildNamespaces($namespace),
                 'classes' => $namespaceReflectionCollector->getClassReflections($namespace),
