@@ -1,0 +1,32 @@
+{var $classSectionCls = !empty($classes) ? "section-item-container class-section-container" : "uk-hidden" }
+<div class="{$classSectionCls}">
+    <h3>Class List</h3>
+    {foreach $classes as $class}
+    <div class="uk-grid-small list-item" data-uk-grid>
+        <div class="uk-width-1-1 uk-flex uk-flex-left">
+            {if $class->isAbstract() }
+                <span class="uk-label uk-label-success">abstract</span>
+            {/if}
+            {if $class->isFinal() }
+                <span class="uk-label uk-label-success">final</span>
+            {/if}
+            {if $class->isDeprecated() }
+                <span class="uk-label uk-label-danger">deprecated</span>
+            {/if}
+        </div>
+        <div class="uk-width-1-1">
+            <span class="entity-type uk-text-right">class</span>
+            <a class="uk-text-break" href = "{$class|linkReflection}">
+                {if isset($showSimpleName) && $showSimpleName}
+                    {$class->getShortName()}
+                {else}
+                    {$class->getName()}
+                {/if}
+            </a>
+        </div>
+        <div class="uk-width-1-1">
+            <span>{$class|description}</span>
+        </div>
+    </div>
+    {/foreach}
+</div>

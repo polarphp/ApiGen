@@ -1,6 +1,6 @@
-{var $cls = !empty($namespaces) ? "section-item-container namespace-section-container" : "uk-hidden" }
-<div class="{$cls}">
-    <h3>subnamespaces</h3>
+{var $namespaceSectionCls = !empty($namespaces) ? "section-item-container namespace-section-container" : "uk-hidden" }
+<div class="{$namespaceSectionCls}">
+    <h3>Subnamespace List</h3>
     {foreach $namespaces as $namespace}
         {var $parts = explode("\\", $namespace) }
         {var $simpleName = array_pop($parts) }
@@ -8,9 +8,9 @@
             <div class="uk-width-1-1 uk-width-1-4@s">
                 <a class="uk-text-break" href = "{$namespace|linkNamespace}">
                     {if isset($showSimpleName) && $showSimpleName}
-                        {$namespace}
-                    {else}
                         {$simpleName}
+                    {else}
+                        {$namespace}
                     {/if}
                 </a>
             </div>
