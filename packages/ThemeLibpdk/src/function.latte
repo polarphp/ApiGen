@@ -2,6 +2,7 @@
 
 {block content}
     <div id="container" style="width: 100%">
+        {var $paramAnnotations = $function->getAnnotation("param")}
         <div class="uk-container uk-margin-small-top uk-margin-small-bottom phpapidoc-page-container phpapidoc-function-content-page">
             <div class="manual-container uk-flex uk-flex-left">
                 <div class="side-panel-container uk-visible@m">
@@ -14,18 +15,87 @@
                             <span class="uk-label uk-label-danger">deprecated</span>
                         </div>
                     {/if}
-                    <% if (cls.detailDescription.trim() != "") { %>
                     <div class="uk-text-small detail-description uk-margin-small-bottom uk-margin-small-top">
-                        <%- cls.detailDescription.trim() %>
+                        {$function|description}
                     </div>
-                    <% } %>
+                    <section class="parameter-container uk-margin-small-top">
+                        <h4>Parameters</h4>
+                        {if $function->getParameters() && !empty($paramAnnotations)}
+                            {foreach $function->getParameters() as $parameter}
+                                <div class="parameter-item">
+                                    <div class="uk-width-1-1 uk-text-break tags-container uk-margin-small-bottom">
+                                        <span class="uk-label uk-label-success">
+                                            {$parameter->getTypeHint()|buildLinkIfReflectionFound}
+                                            {if $parameter->isPassedByReference()}
+                                                &
+                                            {/if}
+                                        </span>
+                                        {if $parameter->isVariadic()}
+                                            <span class="uk-label uk-label-success">varidic</span>
+                                        {/if}
+                                        {if $parameter->isCallable()}
+                                            <span class="uk-label uk-label-success">callable</span>
+                                        {/if}
+                                    </div>
+                                    <div class="uk-grid-collapse uk-text-left" uk-grid>
+                                        <div style="width: 60px;">Name: </div>
+                                        <div class="uk-width-expand uk-text-break">
+                                            <span class="property-name">${$parameter->getName()}</span>
+                                        </div>
+                                    </div>
+                                    {if $parameter->isDefaultValueAvailable()}
+                                        <div class="uk-grid-collapse uk-text-left" uk-grid>
+                                            <div style="width: 60px;">Default: </div>
+                                            <div class="uk-width-expand uk-text-break">
+                                                <span class="property-name">
+                                                    {if $parameter->isArray() }
+                                                        The array data passed
+                                                    {else}
+                                                        {$parameter->getDefaultValue()|dumpDefaultValue|phpHighlight|noescape}
+                                                    {/if}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    {/if}
+                                    <div class="description uk-text-break">{$parameter->getDescription()}</div>
+                                </div>
+                            {/foreach}
+                        {else}
+                            <div>oops, no parameters</div>
+                        {/if}
+                    </section>
 
-                    <div class="uk-margin-medium-top">
-                        <h3>详细描述文档</h3>
-                    </div>
+                    <section class="parameter-container uk-margin-small-top">
+                        <h4>Return Description</h4>
+                        {var $returnAnnotations = $function->getAnnotation("return")}
+                        {if !empty($returnAnnotations)}
+                            <div class="return-types">
+                                {foreach $returnAnnotations as $return}
+                                    {php
+                                        $rawReturnType = $return->getType()."";
+                                        $partTypes = explode('|', $rawReturnType);
+                                        $returnTypes = [];
+                                        foreach($partTypes as $type) {
+                                            $returnTypes[] = ($type[0] == '\\' ? substr($type, 1): $type);
+                                        }
+                                    }
+                                    {if !empty($returnTypes)}
+                                        <div class="uk-width-1-1 uk-text-break tags-container uk-margin-small-bottom">
+                                            {foreach $returnTypes as $returnType}
+                                                <span class="uk-label uk-label-success">{$returnType|buildLinkIfReflectionFound}</span>
+                                            {/foreach}
+                                        </div>
+                                    {/if}
+                                {/foreach}
+                                <div class="return-description">{$return->getDescription()}</div>
+                            </div>
+                        {else}
+                            <div>oops, no return description</div>
+                        {/if}
+                    </section>
                     <div class="uk-margin-small-top uk-text-break">
-                        在文件&nbsp;<span class="uk-text-success"><%- cls.location.file.substring(8) %></span>&nbsp;的第
-                        &nbsp;<span class="uk-text-success"><%- cls.location.line %></span>&nbsp;行定义
+                        {var $filename = str_replace(getcwd()."/src/", "", $function->getFileName()) }
+                        defined at <span class="uk-text-success">{$function->getStartLine() }</span> line of file <span class="uk-text-success">{$filename}</span>
                     </div>
                     {include "partial/apigen_version.latte"}
                 </div>

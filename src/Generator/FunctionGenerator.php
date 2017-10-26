@@ -63,6 +63,9 @@ final class FunctionGenerator implements GeneratorInterface
 
     private function generateForFunction(FunctionReflectionInterface $reflectionFunction): void
     {
+        if ("Zapi\\some_deprecated_function" == $reflectionFunction->getName()) {
+            var_dump($reflectionFunction->getAnnotation("return"));
+        }
         $this->templateRenderer->renderToFile(
             $this->configuration->getTemplateByName('function'),
             $this->configuration->getDestinationWithPrefixName('function-', $reflectionFunction->getName()),
