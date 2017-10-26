@@ -18,7 +18,7 @@
                 </a>
                 ({foreach $function->getParameters() as $parameter}
                 <span>
-
+                {$parameter->getTypeHint()|buildLinkIfReflectionFound}
                 <span class="callable-param-name">{if $parameter->isPassedByReference()}&amp; {/if}${$parameter->getName()}</span>
                 {if $parameter->isDefaultValueAvailable()} = {$parameter->getDefaultValue()|dumpDefaultValue|phpHighlight|noescape}{elseif $parameter->isVariadic()},…{/if}</span>{sep}, {/sep}
                 {/foreach})
