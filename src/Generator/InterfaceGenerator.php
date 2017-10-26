@@ -60,6 +60,7 @@ final class InterfaceGenerator implements GeneratorInterface
             $this->configuration->getDestinationWithPrefixName('interface-', $interfaceReflection->getName()),
             [
                 'activePage' => 'interface',
+                'apiCatalogKey' => 'interfaces',
                 'interface' => $interfaceReflection,
                 'siteCategory' => $this->configuration->getOption('sitecategory'),
                 'apiCatalog'=> $this->configuration->getOption('apicatalog')

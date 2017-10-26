@@ -58,6 +58,7 @@ final class NamespaceGenerator implements GeneratorInterface
             $this->configuration->getTemplateByName('namespace'),
             $this->configuration->getDestinationWithPrefixName('namespace-', $namespace),
             [
+                'apiCatalogKey' => 'namespaces',
                 'activePage' => 'namespace',
                 'simpleNamespace' => $simpleNamespace,
                 'activeNamespace' => $namespace,

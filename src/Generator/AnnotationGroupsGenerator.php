@@ -48,6 +48,7 @@ final class AnnotationGroupsGenerator implements GeneratorInterface
             $this->configuration->getDestinationWithPrefixName('annotation-group-', $annotation),
             [
                 'annotation' => $annotation,
+                'apiCatalogKey' => 'annotations',
                 'activePage' => 'annotation-group-' . $annotation,
                 'hasElements' => $this->annotationReflectionCollector->hasAnyElements(),
                 'classes' => $this->annotationReflectionCollector->getClassReflections($annotation),

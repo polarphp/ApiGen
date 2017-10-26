@@ -1,0 +1,45 @@
+{layout '@layout.latte'}
+
+{block content}
+    <div id="container" style="width: 100%">
+        <div class="uk-container uk-margin-small-top uk-margin-small-bottom phpapidoc-page-container phpapidoc-function-content-page">
+            <div class="manual-container uk-flex uk-flex-left">
+                <div class="side-panel-container uk-visible@m">
+                    {include "partial/api_catalog.latte"}
+                </div>
+                <div class="uk-width-expand phpapidoc-info-container phpapidoc-function-content-info-container">
+                    <h3 class="title uk-text-break">{$function->getName()}</h3>
+                    {if $function->hasAnnotation("deprecated") }
+                        <div class="uk-width-1-1 uk-text-break tags-container">
+                            <span class="uk-label uk-label-danger">deprecated</span>
+                        </div>
+                    {/if}
+                    <% if (cls.detailDescription.trim() != "") { %>
+                    <div class="uk-text-small detail-description uk-margin-small-bottom uk-margin-small-top">
+                        <%- cls.detailDescription.trim() %>
+                    </div>
+                    <% } %>
+
+                    <div class="uk-margin-medium-top">
+                        <h3>详细描述文档</h3>
+                    </div>
+                    <div class="uk-margin-small-top uk-text-break">
+                        在文件&nbsp;<span class="uk-text-success"><%- cls.location.file.substring(8) %></span>&nbsp;的第
+                        &nbsp;<span class="uk-text-success"><%- cls.location.line %></span>&nbsp;行定义
+                    </div>
+                    {include "partial/apigen_version.latte"}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function ()
+        {
+            $(".detail-description table").each(function ()
+            {
+                $(this).addClass("uk-table uk-table-divider uk-table-small uk-table-striped");
+            });
+        });
+    </script>
+{/block}

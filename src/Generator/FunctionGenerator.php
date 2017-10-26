@@ -68,6 +68,7 @@ final class FunctionGenerator implements GeneratorInterface
             $this->configuration->getDestinationWithPrefixName('function-', $reflectionFunction->getName()),
             [
                 'activePage' => 'function',
+                'apiCatalogKey' => 'functions',
                 'function' => $reflectionFunction,
                 'siteCategory' => $this->configuration->getOption('sitecategory'),
                 'apiCatalog'=> $this->configuration->getOption('apicatalog')

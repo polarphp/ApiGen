@@ -49,6 +49,7 @@ final class ClassesGenerator implements GeneratorInterface
             $this->configuration->getTemplateByName(self::NAME),
             $this->configuration->getDestinationWithName(self::NAME),
             [
+                'apiCatalogKey' => 'classes',
                 'activePage' => self::NAME,
                 'pageTitle' => ucfirst(self::NAME),
                  self::NAME => $this->reflectionStorage->getClassReflections(),

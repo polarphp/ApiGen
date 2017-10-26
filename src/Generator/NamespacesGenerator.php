@@ -30,6 +30,7 @@ final class NamespacesGenerator implements GeneratorInterface
             $this->configuration->getTemplateByName('namespaces'),
             $this->configuration->getDestinationWithName('namespaces'),
             [
+                'apiCatalogKey' => 'namespaces',
                 'activePage' => 'namespaces',
                 'siteCategory' => $this->configuration->getOption('sitecategory'),
                 'apiCatalog'=> $this->configuration->getOption('apicatalog')

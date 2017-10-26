@@ -67,6 +67,7 @@ final class EmptyNamespaceGenerator implements GeneratorInterface
             $this->configuration->getTemplateByName('namespace'),
             $this->configuration->getDestinationWithPrefixName('namespace-', $namespace),
             [
+                'apiCatalogKey' => 'namespaces',
                 'activePage' => 'namespace',
                 'activeNamespace' => $namespace,
                 'childNamespaces' => $this->childNamespacesResolver->resolve($namespace),

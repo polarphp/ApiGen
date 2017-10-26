@@ -50,6 +50,7 @@ final class InterfacesGenerator implements GeneratorInterface
             $this->configuration->getDestinationWithName(self::NAME),
             [
                 'activePage' => self::NAME,
+                'apiCatalogKey' => 'interfaces',
                 'pageTitle' => ucfirst(self::NAME),
                 self::NAME => $this->reflectionStorage->getInterfaceReflections(),
                 'siteCategory' => $this->configuration->getOption('sitecategory'),

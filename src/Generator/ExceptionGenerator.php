@@ -60,6 +60,7 @@ final class ExceptionGenerator implements GeneratorInterface
             $this->configuration->getDestinationWithPrefixName('exception-', $exceptionReflection->getName()),
             [
                 'activePage' => 'exception',
+                'apiCatalogKey' => 'exception',
                 'class' => $exceptionReflection,
                 'siteCategory' => $this->configuration->getOption('sitecategory'),
                 'apiCatalog'=> $this->configuration->getOption('apicatalog')

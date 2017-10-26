@@ -48,6 +48,7 @@ final class GlobalsGenerator implements GeneratorInterface
             $this->configuration->getDestinationWithName('globals'),
             [
                 'activePage' => 'globals',
+                'apiCatalogKey' => 'globals',
                 'classes' => $this->namespaceReflectionCollector->getClassReflections("none"),
                 'interfaces' => $this->namespaceReflectionCollector->getInterfaceReflections("none"),
                 'traits' => $this->namespaceReflectionCollector->getTraitReflections("none"),

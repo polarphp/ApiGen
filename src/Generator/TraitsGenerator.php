@@ -49,6 +49,7 @@ final class TraitsGenerator implements GeneratorInterface
             $this->configuration->getTemplateByName(self::NAME),
             $this->configuration->getDestinationWithName(self::NAME),
             [
+                'apiCatalogKey' => 'traits',
                 'activePage' => self::NAME,
                 'pageTitle' => ucfirst(self::NAME),
                 self::NAME => $this->reflectionStorage->getTraitReflections(),

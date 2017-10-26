@@ -4,7 +4,7 @@
     {foreach $traits as $trait}
         <div class="uk-grid-small list-item" data-uk-grid>
             {if $trait->hasAnnotation("deprecated") }
-                <div class="uk-width-1-1 uk-flex uk-flex-left">
+                <div class="uk-width-1-1 uk-flex uk-flex-left tags-container">
                     <span class="uk-label uk-label-danger">deprecated</span>
                 </div>
             {/if}

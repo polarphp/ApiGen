@@ -4,7 +4,7 @@
     {foreach $classes as $class}
         <div class="uk-grid-small list-item" data-uk-grid>
             {if $class->isAbstract() || $class->isFinal() || $class->isDeprecated() }
-                <div class="uk-width-1-1 uk-flex uk-flex-left">
+                <div class="uk-width-1-1 uk-flex uk-flex-left tags-container">
                     {if $class->isAbstract() }
                         <span class="uk-label uk-label-success">abstract</span>
                     {/if}

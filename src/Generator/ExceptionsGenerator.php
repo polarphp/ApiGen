@@ -50,6 +50,7 @@ final class ExceptionsGenerator implements GeneratorInterface
             $this->configuration->getDestinationWithName(self::NAME),
             [
                 'activePage' => self::NAME,
+                'apiCatalogKey' => 'exceptions',
                 'pageTitle' => ucfirst(self::NAME),
                 self::NAME => $this->reflectionStorage->getExceptionReflections(),
                 'siteCategory' => $this->configuration->getOption('sitecategory'),

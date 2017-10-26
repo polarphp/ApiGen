@@ -60,6 +60,7 @@ final class TraitGenerator implements GeneratorInterface
             $this->configuration->getDestinationWithPrefixName('trait-', $traitReflection->getName()),
             [
                 'activePage' => 'trait',
+                'apiCatalogKey' => 'traits',
                 'trait' => $traitReflection,
                 'siteCategory' => $this->configuration->getOption('sitecategory'),
                 'apiCatalog'=> $this->configuration->getOption('apicatalog')
