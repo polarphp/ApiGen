@@ -24,6 +24,8 @@ final class NamespaceGenerator implements GeneratorInterface
      */
     private $namespaceReflectionCollector;
 
+    private $constDefs = array();
+
     public function __construct(
         NamespaceReflectionCollector $namespaceReflectionCollector,
         Configuration $configuration,
@@ -51,6 +53,7 @@ final class NamespaceGenerator implements GeneratorInterface
         } else {
             $simpleNamespace = array_pop($parts);
         }
+        $constants = $this->findConstByNamespace($namespace);
         $this->templateRenderer->renderToFile(
             $this->configuration->getTemplateByName('namespace'),
             $this->configuration->getDestinationWithPrefixName('namespace-', $namespace),
@@ -65,9 +68,24 @@ final class NamespaceGenerator implements GeneratorInterface
                 'traits' => $namespaceReflectionCollector->getTraitReflections($namespace),
                 'functions' => $namespaceReflectionCollector->getFunctionReflections($namespace),
                 'siteCategory' => $this->configuration->getOption('sitecategory'),
-                'apiCatalog'=> $this->configuration->getOption('apicatalog')
+                'apiCatalog'=> $this->configuration->getOption('apicatalog'),
+                "constants" => $constants
             ]
         );
+    }
+
+    private function findConstByNamespace($namespace)
+    {
+        $nsDir = getcwd().DIRECTORY_SEPARATOR."ConstDefs";
+        if ($namespace != "none") {
+            $nsDir .= DIRECTORY_SEPARATOR.$namespace;
+        }
+        $nsDir = str_replace("\\", DIRECTORY_SEPARATOR, $nsDir);
+        $filename = $nsDir.DIRECTORY_SEPARATOR."ConstDefinitions.php";
+        if (file_exists($filename)) {
+            return include $filename;
+        }
+        return [];
     }
 
     /**

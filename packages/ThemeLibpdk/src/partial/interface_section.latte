@@ -1,0 +1,26 @@
+{var $interfaceSectionCls = !empty($interfaces) ? "section-item-container interface-section-container" : "uk-hidden" }
+<div class="{$interfaceSectionCls}">
+    <h3>Interface List</h3>
+    {foreach $interfaces as $interface}
+        <div class="uk-grid-small list-item" data-uk-grid>
+            {if $interface->isDeprecated() }
+                <div class="uk-width-1-1 uk-flex uk-flex-left">
+                    <span class="uk-label uk-label-danger">deprecated</span>
+                </div>
+            {/if}
+            <div class="uk-width-1-1">
+                <span class="entity-type uk-text-right">interface</span>
+                <a class="uk-text-break" href = "{$interface|linkReflection}">
+                    {if isset($showSimpleName) && $showSimpleName}
+                        {$interface->getShortName()}
+                    {else}
+                        {$interface->getName()}
+                    {/if}
+                </a>
+            </div>
+            <div class="uk-width-1-1">
+                <span>{$interface|description}</span>
+            </div>
+        </div>
+    {/foreach}
+</div>

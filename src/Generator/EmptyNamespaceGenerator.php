@@ -76,7 +76,8 @@ final class EmptyNamespaceGenerator implements GeneratorInterface
                 'traits' => [],
                 'functions' => [],
                 'siteCategory' => $this->configuration->getOption('sitecategory'),
-                'apiCatalog'=> $this->configuration->getOption('apicatalog')
+                'apiCatalog'=> $this->configuration->getOption('apicatalog'),
+                "constants" => []
             ]
         );
     }

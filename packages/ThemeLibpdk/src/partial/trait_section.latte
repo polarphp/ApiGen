@@ -1,0 +1,26 @@
+{var $traitSectionCls = !empty($traits) ? "section-item-container trait-section-container" : "uk-hidden" }
+<div class="{$traitSectionCls}">
+    <h3>Trait List</h3>
+    {foreach $traits as $trait}
+        <div class="uk-grid-small list-item" data-uk-grid>
+            {if $trait->hasAnnotation("deprecated") }
+                <div class="uk-width-1-1 uk-flex uk-flex-left">
+                    <span class="uk-label uk-label-danger">deprecated</span>
+                </div>
+            {/if}
+            <div class="uk-width-1-1">
+                <span class="entity-type uk-text-right">class</span>
+                <a class="uk-text-break" href = "{$trait|linkReflection}">
+                    {if isset($showSimpleName) && $showSimpleName}
+                        {$trait->getShortName()}
+                    {else}
+                        {$trait->getName()}
+                    {/if}
+                </a>
+            </div>
+            <div class="uk-width-1-1">
+                <span>{$trait|description}</span>
+            </div>
+        </div>
+    {/foreach}
+</div>

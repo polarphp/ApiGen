@@ -36,14 +36,14 @@ final class AutoCompleteDataGenerator implements GeneratorInterface
 
     public function generate(): void
     {
-        $this->templateRenderer->renderToFile(
-            $this->configuration->getTemplatesDirectory() . DIRECTORY_SEPARATOR . 'elementlist.js.latte',
-            $this->configuration->getDestination() . DIRECTORY_SEPARATOR . 'elementlist.js',
-            [
-                'autocompleteElements' => $this->autocompleteElements->getElements(),
-                'siteCategory' => $this->configuration->getOption('sitecategory'),
-                'apiCatalog'=> $this->configuration->getOption('apicatalog')
-            ]
-        );
+//        $this->templateRenderer->renderToFile(
+//            $this->configuration->getTemplatesDirectory() . DIRECTORY_SEPARATOR . 'elementlist.js.latte',
+//            $this->configuration->getDestination() . DIRECTORY_SEPARATOR . 'elementlist.js',
+//            [
+//                'autocompleteElements' => $this->autocompleteElements->getElements(),
+//                'siteCategory' => $this->configuration->getOption('sitecategory'),
+//                'apiCatalog'=> $this->configuration->getOption('apicatalog')
+//            ]
+//        );
     }
 }
