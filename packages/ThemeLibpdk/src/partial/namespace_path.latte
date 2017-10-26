@@ -1,6 +1,7 @@
 {var $currentNamespace = ''}
 {var $namespaceParts = explode('\\', $namespace)}
-{if count($namespaceParts) > 1 }
+{default $showAll = false}
+{if count($namespaceParts) > 1 || ($showAll && count($namespaceParts) == 1)}
     <div>
         <div class="nav-path uk-flex uk-flex-left uk-text-break uk-visible@s">
             <div data-uk-icon="icon: home"></div>
@@ -11,21 +12,21 @@
                     {else}
                         {var $currentNamespace = $namespacePart}
                     {/if}
-                    {if !$iterator->isLast() }
+                    {if !$iterator->isLast() || ($showAll && count($namespaceParts) == 1)}
                         <li><a href="{$currentNamespace|linkNamespace}">{$namespacePart}</a></li>
                     {/if}
-
                 {/foreach}
             </ul>
         </div>
         <div class="nav-path-grid uk-hidden@s uk-grid-collapse " uk-grid>
+            {php $currentNamespace = ""}
             {foreach $namespaceParts as $namespacePart}
                 {if $currentNamespace}
                     {var $currentNamespace = $currentNamespace . '\\' . $namespacePart}
                 {else}
                     {var $currentNamespace = $namespacePart}
                 {/if}
-                {if !$iterator->isLast() }
+                {if !$iterator->isLast()  || ($showAll && count($namespaceParts) == 1)}
                     <div class="uk-width-1-1">
                         <span uk-icon="icon: link"></span>
                         <a href="{$currentNamespace|linkNamespace}">{$namespacePart}</a>

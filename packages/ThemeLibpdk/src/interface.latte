@@ -1,0 +1,43 @@
+{layout '@layout.latte'}
+{block content}
+    <div id="container" style="width: 100%">
+        <div class="uk-container uk-margin-small-top uk-margin-small-bottom phpapidoc-page-container phpapidoc-interface-content-page">
+            <div class="phpapidoc-container uk-flex uk-flex-left">
+                <div class="side-panel-container uk-visible@m">
+                    {include "partial/api_catalog.latte"}
+                </div>
+                <div class="uk-width-expand phpapidoc-info-container phpapidoc-interface-content-info-container">
+                    {include "partial/namespace_path.latte", "namespace" => $interface->getNamespaceName(), "showAll" => true}
+                    <div class="uk-width-1-1 uk-text-break tags-container">
+                        <span class="uk-label uk-label-success">interface</span>
+                        {if $interface->isDeprecated() }
+                            <span class="uk-label uk-label-danger">deprecated</span>
+                        {/if}
+                    </div>
+                    <h3 class="title uk-text-break">{$interface->getName()}</h3>
+                    {var $description = $interface->getDescription() }
+                    {if $description != ""}
+                        <div class="uk-text-small uk-text-break uk-margin-small-bottom uk-margin-small-top">
+                            {$interface|description}
+                        </div>
+                    {/if}
+                    {include "partial/class_const_section.latte", "entity" => $interface}
+                    {include "partial/apigen_version.latte"}
+                </div>
+            </div>
+        </div>
+    </div>
+    <script n:syntax="off">
+        $(function ()
+        {
+            $(document).ready(function ()
+            {
+                $(".detail-description table").each(function ()
+                {
+                    $(this).addClass("uk-table uk-table-divider uk-table-small uk-table-striped");
+                });
+            });
+        });
+    </script>
+{/block}
+

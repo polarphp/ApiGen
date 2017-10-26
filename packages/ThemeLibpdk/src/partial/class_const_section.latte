@@ -1,0 +1,57 @@
+{var $constants = $entity->getOwnConstants()}
+{var $constSectionCls = !empty($constants) ? "section-item-container class-const-section-container" : "uk-hidden" }
+
+{define constItemSection}
+    <div class="uk-grid-small list-item" uk-grid>
+        <div class="uk-width-1-1 uk-text-break tags-container">
+            {if $constant->isPublic()}
+                <span class="uk-label uk-label-success">public</span>
+            {elseif $constant->isProtected()}
+                <span class="uk-label uk-label-success">protected</span>
+            {elseif $constant->isPrivate()}
+                <span class="uk-label uk-label-success">private</span>
+            {/if}
+            <span class="uk-label uk-label-success" style="text-transform: none">{$constant->getTypeHint()|buildLinkIfReflectionFound}</span>
+            {if $constant->isDeprecated() }
+                <span class="uk-label uk-label-danger">deprecated</span>
+            {/if}
+        </div>
+        <div class="uk-width-1-1 uk-text-break name">
+            <span class="uk-text-break page-scroll-trigger">{$constant->getName()}</span>
+            <span class="const-define uk-text-break uk-text-primary">{$constant->getValue()|dumpDefaultValue|phpHighlight|noescape}</span>
+        </div>
+        <div class="uk-width-1-1">
+            <div class="uk-text-break">
+                {if $constant instanceof \ApiGen\Reflection\Contract\Reflection\Partial\AnnotationsInterface && $constant->getDescription() != ""}
+                    {$constant|description}
+                {elseif $constant->hasAnnotation("var") }
+                    {var $varAnnotation = $constant->getAnnotation("var")}
+                    {$varAnnotation[0]}
+                {/if}
+            </div>
+        </div>
+    </div>
+{/define}
+<div class="{$constSectionCls}">
+    <h3>Constant List</h3>
+    {foreach $constants as $constant}
+        {include constItemSection, constant => $constant}
+    {/foreach}
+    {var $inheritConstants = $entity->getInheritedConstants()}
+    {if !empty($inheritConstants)}
+        <ul data-uk-accordion="multiple: true" class="uk-margin-medium-top inherits-container">
+            <li class="inherit-item">
+                <div class="uk-accordion-title uk-width-1-1 uk-text-middle uk-text-left">
+            <span class="uk-text-break">
+            view inherit constants
+            </span>
+                </div>
+                <div class="uk-accordion-content">
+                    {foreach $inheritConstants as $constant}
+                        {include constItemSection, constant => $constant}
+                    {/foreach}
+                </div>
+            </li>
+        </ul>
+    {/if}
+</div>
