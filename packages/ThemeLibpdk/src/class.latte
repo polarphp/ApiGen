@@ -1,0 +1,91 @@
+{layout '@layout.latte'}
+{block content}
+    <div id="container" style="width: 100%">
+        <div class="uk-container uk-margin-small-top uk-margin-small-bottom phpapidoc-page-container phpapidoc-class-content-page">
+            <div class="phpapidoc-container uk-flex uk-flex-left">
+                <div class="side-panel-container uk-visible@m">
+                    {include "partial/api_catalog.latte"}
+                </div>
+                <div class="uk-width-expand phpapidoc-info-container phpapidoc-class-content-info-container">
+                    {include "partial/namespace_path.latte", "namespace" => $class->getNamespaceName(), "showAll" => true}
+                    <div class="uk-width-1-1 uk-text-break tags-container">
+                        {if $class->isDeprecated() }
+                            <span class="uk-label uk-label-danger">deprecated</span>
+                        {/if}
+                        {if $class->isAbstract() }
+                            <span class="uk-label uk-label-success">abstract</span>
+                        {/if}
+                        {if $class->isFinal() }
+                            <span class="uk-label uk-label-success">final</span>
+                        {/if}
+                    </div>
+                    <h3 class="title uk-text-break">{$class->getName()}</h3>
+                    {var $description = $class->getDescription() }
+                    <div class="uk-text-small uk-text-break uk-margin-small-bottom uk-margin-small-top">
+                        {if $description != ""}
+                            {$class|description}
+                        {else}
+                            oops, currrent description is empty
+                        {/if}
+                    </div>
+                    {*{if $interface->getOwnInterfaces()}*}
+                    {*<div class="section-item-container implements-section-item-container">*}
+                    {*<h3>Implements interfaces</h3>*}
+                    {*{foreach $interface->getOwnInterfaces() as $ownInterface}*}
+                    {*<div class="uk-grid-small list-item" uk-grid>*}
+                    {*<div class="uk-width-1-1 uk-text-break tags-container">*}
+                    {*{if $interface->isDeprecated() }*}
+                    {*<span class="uk-label uk-label-danger">deprecated</span>*}
+                    {*{/if}*}
+                    {*</div>*}
+                    {*<div class="uk-width-1-1 uk-width-1-4@s">*}
+                    {*<a href="{$ownInterface|linkReflection}" class="uk-text-break">{$ownInterface->getName()}</a>*}
+                    {*</div>*}
+                    {*<div class="uk-width-1-1 uk-width-3-4@s">*}
+                    {*<span>*}{*<%- item.briefDescription %>*}{*</span>*}
+                    {*</div>*}
+                    {*</div>*}
+                    {*{/foreach}*}
+                    {*</div>*}
+                    {*{/if}*}
+                    {*{if $interface->getImplementers()}*}
+                    {*<div class="section-item-container implements-section-item-container uk-margin-small-top">*}
+                    {*<h3>Known implementers</h3>*}
+                    {*{foreach $interface->getImplementers() as $implementer}*}
+                    {*<div class="uk-grid-small list-item" uk-grid>*}
+                    {*<div class="uk-width-1-1 uk-text-break tags-container">*}
+                    {*{if $implementer->isDeprecated() }*}
+                    {*<span class="uk-label uk-label-danger">deprecated</span>*}
+                    {*{/if}*}
+                    {*</div>*}
+                    {*<div class="uk-width-1-1 uk-width-1-4@s">*}
+                    {*<a href="{$implementer|linkReflection}" class="uk-text-break">{$implementer->getName()}</a>*}
+                    {*</div>*}
+                    {*<div class="uk-width-1-1 uk-width-3-4@s">*}
+                    {*<span>*}{*<%- item.briefDescription %>*}{*</span>*}
+                    {*</div>*}
+                    {*</div>*}
+                    {*{/foreach}*}
+                    {*</div>*}
+                    {*{/if}*}
+
+                    {*{include "partial/class_const_section.latte", "entity" => $class}*}
+                    {*{include "partial/class_method_section.latte", "entity" => $class, "isInterface" => true}*}
+                    {include "partial/apigen_version.latte"}
+                </div>
+            </div>
+        </div>
+    </div>
+    <script n:syntax="off">
+        $(function ()
+        {
+            $(document).ready(function ()
+            {
+                $(".detail-description table").each(function ()
+                {
+                    $(this).addClass("uk-table uk-table-divider uk-table-small uk-table-striped");
+                });
+            });
+        });
+    </script>
+{/block}

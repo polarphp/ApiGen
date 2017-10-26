@@ -1,5 +1,11 @@
 {var $currentNamespace = ''}
-{var $namespaceParts = explode('\\', $namespace)}
+{php
+$namespaceParts = [];
+array_map(function($item)use(&$namespaceParts){
+        $item = trim($item);
+        $item != "" && $namespaceParts[] = $item;
+    },explode('\\', $namespace));
+}
 {default $showAll = false}
 {if count($namespaceParts) > 1 || ($showAll && count($namespaceParts) == 1)}
     <div>

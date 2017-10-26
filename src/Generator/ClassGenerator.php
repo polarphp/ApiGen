@@ -59,6 +59,7 @@ final class ClassGenerator implements GeneratorInterface
             $this->configuration->getTemplateByName('class'),
             $this->configuration->getDestinationWithPrefixName('class-', $classReflection->getName()),
             [
+                'apiCatalogKey' => 'classes',
                 'activePage' => 'class',
                 'class' => $classReflection,
                 'siteCategory' => $this->configuration->getOption('sitecategory'),
