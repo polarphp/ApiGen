@@ -16,7 +16,7 @@
                 <span class="uk-label uk-label-danger">deprecated</span>
             {/if}
         </div>
-        <div class="uk-width-1-1 uk-text-break name">
+        <div class="uk-width-1-1 uk-text-break constant-name">
             <span class="uk-text-break page-scroll-trigger">{$constant->getName()}</span>
             <span class="const-define uk-text-break uk-text-primary">{$constant->getValue()|dumpDefaultValue|phpHighlight|noescape}</span>
         </div>
@@ -39,7 +39,7 @@
     {/foreach}
     {var $inheritConstants = $entity->getInheritedConstants()}
     {if !empty($inheritConstants)}
-        <ul data-uk-accordion="multiple: true" class="uk-margin-medium-top inherits-container">
+        <ul data-uk-accordion="multiple: true" class="inherits-container">
             <li class="inherit-item">
                 <div class="uk-accordion-title uk-width-1-1 uk-text-middle uk-text-left">
             <span class="uk-text-break">
