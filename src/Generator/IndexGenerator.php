@@ -30,7 +30,7 @@ final class IndexGenerator implements GeneratorInterface
             $this->configuration->getTemplateByName('index'),
             $this->configuration->getDestinationWithName('index'),
             [
-                'activePage' => 'overview',
+                'activePage' => 'index',
                 'siteCategory' => $this->configuration->getOption('sitecategory'),
                 'apiCatalog'=> $this->configuration->getOption('apicatalog')
             ]

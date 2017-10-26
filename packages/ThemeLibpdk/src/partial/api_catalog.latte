@@ -1,5 +1,10 @@
 <ul class="side-panel uk-visible@m" uk-sticky="offset: 70">
     <li n:foreach="$apiCatalog as $item">
-        <img src ="/statics/images/apidocs/php/{$item['icon']}"/><a href="{$item['url']}">{$item['name']}</a>
+        <img src ="/statics/images/apidocs/php/{$item['icon']}"/>
+        {if $iterator->key() == $activePage}
+            <a href="{$item['url']}" class="active-item">{$item['name']}</a>
+        {else}
+            <a href="{$item['url']}">{$item['name']}</a>
+        {/if}
     </li>
 </ul>

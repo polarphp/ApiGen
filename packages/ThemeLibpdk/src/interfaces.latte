@@ -1,0 +1,31 @@
+{layout '@layout.latte'}
+
+{block content}
+    <div id="container" style="width:100%;">
+        <div class="uk-container uk-margin-small-top uk-margin-small-bottom phpapidoc-page-container phpapidoc-interfaces-page">
+            <div class="phpapidoc-container uk-flex uk-flex-left">
+                <div class="side-panel-container uk-visible@m">
+                    {include "partial/api_catalog.latte"}
+                </div>
+                <div class="uk-width-expand phpapidoc-info-container phpapidoc-interfaces-info-container">
+                    <div class="function-entry">
+                        <div class="title">
+                            <img src="/statics/images/apidocs/php/interface.svg"/><h2>All Interfaces</h2>
+                        </div>
+                    </div>
+                    {if count($interfaces)}
+                        <ul>
+                            {foreach $interfaces as $interface}
+                                <li>
+                                    <a href="{$interface|linkReflection}">{$interface->getName()}</a>
+                                </li>
+                            {/foreach}
+                        </ul>
+                    {/if}
+                    <hr class="uk-divider-icon"/>
+                    {include "partial/apigen_version.latte"}
+                </div>
+            </div>
+        </div>
+    </div>
+{/block}

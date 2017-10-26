@@ -13,14 +13,12 @@
         <div class="uk-offcanvas-bar" id = "sidebar">
             <button class="uk-offcanvas-close" type="button" uk-close></button>
             <div class="menu-container">
-                <%- partial("_partial/inject_site_menu") %>
+                {include "partial/site_menu.latte"}
                 <ul class = "uk-text-left extra-items uk-width-1-1">
-                    <%
-                    for(let i = 0; i < apiCatalog.length; i++) {
-                        let catalogItem = apiCatalog[i];
-                    %>
-                    <li class="uk-width-1-1"><a href = <%- catalogItem.url %>><%- catalogItem.name %></a></li>
-                    <% } %>
+                    <li n:foreach="$apiCatalog as $item">
+                        <img src ="/statics/images/apidocs/php/{$item['icon']}" style="height: 20px;width: 20px;padding-right: 5px"/>
+                        <a href="{$item['url']}">{$item['name']}</a>
+                    </li>
                 </ul>
             </div>
         </div>

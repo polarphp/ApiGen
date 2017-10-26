@@ -1,0 +1,31 @@
+{layout '@layout.latte'}
+
+{block content}
+    <div id="container" style="width:100%;">
+        <div class="uk-container uk-margin-small-top uk-margin-small-bottom phpapidoc-page-container phpapidoc-classes-page">
+            <div class="phpapidoc-container uk-flex uk-flex-left">
+                <div class="side-panel-container uk-visible@m">
+                    {include "partial/api_catalog.latte"}
+                </div>
+                <div class="uk-width-expand phpapidoc-info-container phpapidoc-classes-info-container">
+                    <div class="class-entry">
+                        <div class="title">
+                            <img src="/statics/images/apidocs/php/class.svg"/><h2>All Classes</h2>
+                        </div>
+                    </div>
+                    {if count($classes)}
+                        <ul>
+                            {foreach $classes as $class}
+                                <li>
+                                    <a href="{$class|linkReflection}">{$class->getName()}</a>
+                                </li>
+                            {/foreach}
+                        </ul>
+                    {/if}
+                    <hr class="uk-divider-icon"/>
+                    {include "partial/apigen_version.latte"}
+                </div>
+            </div>
+        </div>
+    </div>
+{/block}

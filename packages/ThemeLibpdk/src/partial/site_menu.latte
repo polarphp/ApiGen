@@ -1,0 +1,16 @@
+<ul class = "uk-text-left uk-width-1-1">
+    {foreach $siteCategory as $item}
+        <li class="uk-width-1-1">
+            {ifset $item['children']}
+                <a>{$item['name']}</a>
+            {else}
+                <a href="{$item['url']}">{$item['name']}</a>
+            {/ifset}
+        </li>
+        {ifset $item['children']}
+            <li n:foreach="$item['children'] as $citem" style="padding-left: 15px;font-size: 0.9em">
+                <a href="{$citem['url']}">{$citem['name']}</a>
+            </li>
+        {/ifset}
+    {/foreach}
+</ul>
