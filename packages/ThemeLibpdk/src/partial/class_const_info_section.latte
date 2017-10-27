@@ -1,0 +1,31 @@
+{var $constSectionCls = !empty($constants) ? "section-item-container class-const-info-section-container" : "uk-hidden" }
+
+{define constItemSection}
+    <section class="uk-grid-small list-item" uk-grid>
+        <div class="uk-width-1-1 uk-text-break tags-container">
+            <span class="uk-label uk-label-success" style="text-transform: none">{$constant->getTypeHint()|buildLinkIfReflectionFound}</span>
+            {if $constant->isDeprecated() }
+                <span class="uk-label uk-label-danger">deprecated</span>
+            {/if}
+        </div>
+        <a id="{$constant->getName()}"></a>
+        <div class="uk-width-1-1 uk-text-break constant-name">
+            <a href="#{$constant->getName()}"><img src="/statics/images/apidocs/php/link.svg"/></a>
+            <span class="uk-text-break">{$constant->getName()}</span>
+            <span class="const-define uk-text-break uk-text-primary">{$constant->getValue()|dumpDefaultValue|phpHighlight|noescape}</span>
+        </div>
+        <div class="uk-text-small uk-text-break uk-margin-small-bottom uk-margin-small-top uk-width-1-1">
+            {$constant|description}
+        </div>
+        <div class="uk-text-break defined-file-location uk-width-1-1">
+            {var $filename = str_replace(getcwd()."/src/", "", $constant->getDeclaringClass()->getFileName()) }
+            defined at <span class="uk-text-success">{$constant->getStartLine() }</span> line of file <span class="uk-text-success">{$filename}</span>
+        </div>
+    </section>
+{/define}
+<div class="{$constSectionCls}">
+    <h3>{$title}</h3>
+    {foreach $constants as $constant}
+        {include constItemSection, constant => $constant, inherit => false}
+    {/foreach}
+</div>

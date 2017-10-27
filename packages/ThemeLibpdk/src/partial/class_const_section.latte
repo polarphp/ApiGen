@@ -18,7 +18,7 @@
             {/if}
         </div>
         <div class="uk-width-1-1 uk-text-break constant-name">
-            <a class="uk-text-break page-scroll-trigger" href="{$constant|linkReflection}">{$constant->getName()}</a>
+            <a class="uk-text-break page-scroll-trigger" href="{$constant|linkReflection}" uk-scroll>{$constant->getName()}</a>
             <span class="const-define uk-text-break uk-text-primary">{$constant->getValue()|dumpDefaultValue|phpHighlight|noescape}</span>
         </div>
     </div>
