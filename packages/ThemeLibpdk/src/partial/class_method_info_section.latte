@@ -1,11 +1,11 @@
+{if !isset($isInterface)}{$isInterface = false}{/if}
+{if !isset($isClass)}{$isClass = false}{/if}
 {var $propertySectionCls = !empty($methods)  ? "section-item-container class-method-info-section-container" : "uk-hidden" }
-
 {define methodItemSection}
     <a id="_{$method->getName()}"></a>
     <section class="uk-grid-small list-item" uk-grid>
         {var $paramAnnotations = $method->getAnnotation("param")}
         <div class="uk-text-break defined-file-location uk-width-1-1">
-            {var $filename = str_replace(getcwd()."/src/", "", $method->getDeclaringClass()->getFileName()) }
             <div class="uk-grid-small" uk-grid>
                 <div class="uk-width-1-1 uk-width-1-2@s uk-text-break method-name">
                     <a href="{$method|linkReflection}"><img src="/statics/images/apidocs/php/link.svg"/></a>
@@ -15,21 +15,23 @@
                     {if $method->isDeprecated() }
                         <span class="uk-label uk-label-danger">deprecated</span>
                     {/if}
-                    {if $method->isPublic()}
-                        <span class="uk-label uk-label-success">public</span>
-                    {elseif $method->isProtected()}
-                        <span class="uk-label uk-label-success">protected</span>
-                    {elseif $method->isPrivate()}
-                        <span class="uk-label uk-label-success">protected</span>
-                    {/if}
-                    {if $method->isFinal() }
-                        <span class="uk-label uk-label-success">final</span>
-                    {/if}
-                    {if $method->isStatic() }
-                        <span class="uk-label uk-label-success">static</span>
-                    {/if}
-                    {if $method->isAbstract() }
-                        <span class="uk-label uk-label-success">abstract</span>
+                    {if $isClass}
+                        {if $method->isPublic()}
+                            <span class="uk-label uk-label-success">public</span>
+                        {elseif $method->isProtected()}
+                            <span class="uk-label uk-label-success">protected</span>
+                        {elseif $method->isPrivate()}
+                            <span class="uk-label uk-label-success">protected</span>
+                        {/if}
+                        {if $method->isFinal() }
+                            <span class="uk-label uk-label-success">final</span>
+                        {/if}
+                        {if $method->isStatic() }
+                            <span class="uk-label uk-label-success">static</span>
+                        {/if}
+                        {if $method->isAbstract() }
+                            <span class="uk-label uk-label-success">abstract</span>
+                        {/if}
                     {/if}
                 </div>
             </div>
@@ -113,6 +115,13 @@
             <div class="uk-text-small detail-description uk-margin-small-bottom uk-margin-small-top">
                 {$method|description}
             </div>
+            {php $declareFilename = ""}
+            {if $isInterface}
+                {php $declareFilename = $method->getDeclaringInterface()->getFileName()}
+            {elseif $isClass}
+                {php $declareFilename = $method->getDeclaringClass()->getFileName()}
+            {/if}
+            {var $filename = str_replace(getcwd()."/src/", "", $declareFilename) }
             defined at <span class="uk-text-success">{$method->getStartLine() }</span> line of file <span class="uk-text-success">{$filename}</span>
         </div>
     </section>

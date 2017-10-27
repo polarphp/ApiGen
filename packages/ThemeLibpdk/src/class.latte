@@ -99,10 +99,12 @@
 
                     {include "partial/class_const_section.latte", "title"=> "Public Constants",
                                                                   "constants" => $constants["public"],
-                                                                  "inheritConstants" => $inheritConstants["public"]}
+                                                                  "inheritConstants" => $inheritConstants["public"],
+                                                                   "isClass" => true}
                     {include "partial/class_const_section.latte", "title"=> "Protected Constants",
                                                                   "constants" => $constants["protected"],
-                                                                  "inheritConstants" => $inheritConstants["protected"]}
+                                                                  "inheritConstants" => $inheritConstants["protected"],
+                                                                   "isClass" => true}
                     {include "partial/class_property_section.latte", "title"=> "Public Static Properties",
                                                                   "properties" => $properties["static"]["public"],
                                                                   "inheritProperties" => $inheritProperties["static"]["public"]}
@@ -136,9 +138,11 @@
 
                     <h2 class="uk-margin-medium-top uk-margin-small-bottom">Detail Description Sections</h2>
                     {include "partial/class_const_info_section.latte", "title"=> "Public Constants",
-                                                                        "constants" => $constants["public"]}
+                                                                       "constants" => $constants["public"],
+                                                                       "isClass" => true}
                     {include "partial/class_const_info_section.latte", "title"=> "Protected Constants",
-                                                                        "constants" => $constants["protected"]}
+                                                                       "constants" => $constants["protected"],
+                                                                       "isClass" => true}
                     {include "partial/class_property_info_section.latte", "title"=> "Public Static Properties",
                                                                   "properties" => $properties["static"]["public"]}
                     {include "partial/class_property_info_section.latte", "title"=> "Protected Static Properties",
@@ -149,13 +153,17 @@
                                                                   "properties" => $properties["instance"]["protected"]}
 
                     {include "partial/class_method_info_section.latte", "title"=> "Public Static Methods",
-                                                                  "methods" => $methods["static"]["public"]}
+                                                                  "methods" => $methods["static"]["public"],
+                                                                  "isClass" => true}
                     {include "partial/class_method_info_section.latte", "title"=> "Protected Static Methods",
-                                                                  "methods" => $methods["static"]["protected"]}
+                                                                  "methods" => $methods["static"]["protected"],
+                                                                  "isClass" => true}
                     {include "partial/class_method_info_section.latte", "title"=> "Public Instance Methods",
-                                                                  "methods" => $methods["instance"]["public"]}
+                                                                  "methods" => $methods["instance"]["public"],
+                                                                  "isClass" => true}
                     {include "partial/class_method_info_section.latte", "title"=> "Protected Instance Methods",
-                                                                  "methods" => $methods["instance"]["protected"]}
+                                                                  "methods" => $methods["instance"]["protected"],
+                                                                  "isClass" => true}
                     {include "partial/apigen_version.latte"}
                 </div>
             </div>

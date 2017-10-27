@@ -1,5 +1,6 @@
+{if !isset($isInterface)}{$isInterface = false}{/if}
+{if !isset($isClass)}{$isClass = false}{/if}
 {var $constSectionCls = !empty($constants) ? "section-item-container class-const-info-section-container" : "uk-hidden" }
-
 {define constItemSection}
     <a id="{$constant->getName()}"></a>
     <section class="uk-grid-small list-item" uk-grid>
@@ -14,13 +15,28 @@
                 {if $constant->isDeprecated() }
                     <span class="uk-label uk-label-danger">deprecated</span>
                 {/if}
+                {if $isInterface}
+                    {if $constant->isPublic()}
+                        <span class="uk-label uk-label-success">public</span>
+                    {elseif $constant->isProtected()}
+                        <span class="uk-label uk-label-success">protected</span>
+                    {elseif $constant->isPrivate()}
+                        <span class="uk-label uk-label-success">private</span>
+                    {/if}
+                {/if}
             </div>
         </div>
         <div class="uk-text-small uk-text-break uk-margin-small-bottom uk-margin-small-top uk-width-1-1">
             {$constant|description}
         </div>
         <div class="uk-text-break defined-file-location uk-width-1-1">
-            {var $filename = str_replace(getcwd()."/src/", "", $constant->getDeclaringClass()->getFileName()) }
+            {php $declareFilename = ""}
+            {if $isInterface}
+                {php $declareFilename = $constant->getDeclaringInterface()->getFileName()}
+            {elseif $isClass}
+                {php $declareFilename = $constant->getDeclaringClass()->getFileName()}
+            {/if}
+            {var $filename = str_replace(getcwd()."/src/", "", $declareFilename) }
             defined at <span class="uk-text-success">{$constant->getStartLine() }</span> line of file <span class="uk-text-success">{$filename}</span>
         </div>
     </section>

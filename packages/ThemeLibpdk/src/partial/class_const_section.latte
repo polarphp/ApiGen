@@ -1,5 +1,6 @@
+{if !isset($isInterface)}{$isInterface = false}{/if}
+{if !isset($isClass)}{$isClass = false}{/if}
 {var $constSectionCls = !empty($constants) || !empty($inheritConstants) ? "section-item-container class-const-section-container" : "uk-hidden" }
-
 {define constItemSection}
     <section class="uk-grid-small list-item" uk-grid>
         <div class="uk-width-1-1 uk-width-1-2@s uk-text-break constant-name">
@@ -7,6 +8,9 @@
             <span class="const-define uk-text-break uk-text-primary">{$constant->getValue()|dumpDefaultValue|phpHighlight|noescape}</span>
         </div>
         <div class="uk-width-1-1 uk-width-1-2@s uk-text-break tags-container uk-flex uk-flex-left uk-flex-right@s" style="margin: 0!important;">
+            {if $constant->isDeprecated() }
+                <span class="uk-label uk-label-danger">deprecated</span>
+            {/if}
             {if $inherit}
                 {var $inheritEntityName = ""}
                 {if method_exists($constant, "getDeclaringClassName") }
@@ -16,10 +20,17 @@
                 {/if}
                 <span class="uk-label uk-label-success" style="text-transform: none">from: {$inheritEntityName|buildLinkIfReflectionFound}</span>
             {/if}
-            <span class="uk-label uk-label-success" style="text-transform: none">{$constant->getTypeHint()|buildLinkIfReflectionFound}</span>
-            {if $constant->isDeprecated() }
-                <span class="uk-label uk-label-danger">deprecated</span>
+            {if $isInterface}
+                {if $constant->isPublic()}
+                    <span class="uk-label uk-label-success">public</span>
+                {elseif $constant->isProtected()}
+                    <span class="uk-label uk-label-success">protected</span>
+                {elseif $constant->isPrivate()}
+                    <span class="uk-label uk-label-success">private</span>
+                {/if}
             {/if}
+            <span class="uk-label uk-label-success" style="text-transform: none">{$constant->getTypeHint()|buildLinkIfReflectionFound}</span>
+
         </div>
     </section>
 {/define}
