@@ -3,16 +3,18 @@
 {define constItemSection}
     <a id="{$constant->getName()}"></a>
     <section class="uk-grid-small list-item" uk-grid>
-        <div class="uk-width-1-1 uk-text-break tags-container">
-            <span class="uk-label uk-label-success" style="text-transform: none">{$constant->getTypeHint()|buildLinkIfReflectionFound}</span>
-            {if $constant->isDeprecated() }
-                <span class="uk-label uk-label-danger">deprecated</span>
-            {/if}
-        </div>
-        <div class="uk-width-1-1 uk-text-break constant-name">
-            <a href="#{$constant->getName()}"><img src="/statics/images/apidocs/php/link.svg"/></a>
-            <span class="uk-text-break">{$constant->getName()}</span>
-            <span class="const-define uk-text-break uk-text-primary">{$constant->getValue()|dumpDefaultValue|phpHighlight|noescape}</span>
+        <div class="uk-grid-small uk-width-1-1" uk-grid>
+            <div class="uk-width-1-1 uk-width-1-2@s uk-text-break constant-name">
+                <a href="#{$constant->getName()}"><img src="/statics/images/apidocs/php/link.svg"/></a>
+                <span class="uk-text-break">{$constant->getName()}</span>
+                <span class="const-define uk-text-break uk-text-primary">{$constant->getValue()|dumpDefaultValue|phpHighlight|noescape}</span>
+            </div>
+            <div class="uk-width-1-1 uk-width-1-2@s uk-text-break tags-container uk-flex uk-flex-left uk-flex-right@s" style="margin: 0!important;">
+                <span class="uk-label uk-label-success" style="text-transform: none">{$constant->getTypeHint()|buildLinkIfReflectionFound}</span>
+                {if $constant->isDeprecated() }
+                    <span class="uk-label uk-label-danger">deprecated</span>
+                {/if}
+            </div>
         </div>
         <div class="uk-text-small uk-text-break uk-margin-small-bottom uk-margin-small-top uk-width-1-1">
             {$constant|description}

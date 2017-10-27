@@ -1,11 +1,118 @@
 {var $propertySectionCls = !empty($methods)  ? "section-item-container class-method-info-section-container" : "uk-hidden" }
 
 {define methodItemSection}
-    <a id="{$method->getName()}"></a>
+    <a id="_{$method->getName()}"></a>
     <section class="uk-grid-small list-item" uk-grid>
+        {var $paramAnnotations = $method->getAnnotation("param")}
         <div class="uk-text-break defined-file-location uk-width-1-1">
             {var $filename = str_replace(getcwd()."/src/", "", $method->getDeclaringClass()->getFileName()) }
-            
+            <div class="uk-grid-small" uk-grid>
+                <div class="uk-width-1-1 uk-width-1-2@s uk-text-break method-name">
+                    <a href="{$method|linkReflection}"><img src="/statics/images/apidocs/php/link.svg"/></a>
+                    <span class="uk-text-break">{$method->getName()}()</span>
+                </div>
+                <div class="uk-width-1-1 uk-width-1-2@s uk-text-break tags-container uk-flex uk-flex-left uk-flex-right@s " style="margin: 0!important;">
+                    {if $method->isDeprecated() }
+                        <span class="uk-label uk-label-danger">deprecated</span>
+                    {/if}
+                    {if $method->isPublic()}
+                        <span class="uk-label uk-label-success">public</span>
+                    {elseif $method->isProtected()}
+                        <span class="uk-label uk-label-success">protected</span>
+                    {elseif $method->isPrivate()}
+                        <span class="uk-label uk-label-success">protected</span>
+                    {/if}
+                    {if $method->isFinal() }
+                        <span class="uk-label uk-label-success">final</span>
+                    {/if}
+                    {if $method->isStatic() }
+                        <span class="uk-label uk-label-success">static</span>
+                    {/if}
+                    {if $method->isAbstract() }
+                        <span class="uk-label uk-label-success">abstract</span>
+                    {/if}
+                </div>
+            </div>
+            <div class="uk-width-1-1 uk-text-break signature">
+                <span class="return-type">{$method|callableReturnType}</span>
+                <span>
+                    {if isset($showSimpleName) && $showSimpleName}
+                        {$method->getShortName()}
+                    {else}
+                        {$method->getName()}
+                    {/if}
+                </span>
+                ({foreach $method->getParameters() as $parameter}
+                <span>
+                {$parameter->getTypeHint()|buildLinkIfReflectionFound}
+                <span class="callable-param-name">{if $parameter->isPassedByReference()}&amp; {/if}${$parameter->getName()}</span>
+                {if $parameter->isDefaultValueAvailable()} = {$parameter->getDefaultValue()|dumpDefaultValue|phpHighlight|noescape}{elseif $parameter->isVariadic()},…{/if}</span>{sep}, {/sep}
+                {/foreach})
+            </div>
+            <section class="parameter-container uk-margin-small-top">
+                <h4>Parameters</h4>
+                {if $method->getParameters() && !empty($paramAnnotations)}
+                    {foreach $method->getParameters() as $parameter}
+                        <div class="parameter-item">
+                            <div class="uk-grid-small list-item uk-width-1-1" uk-grid>
+                                <div class="uk-width-1-1 uk-width-1-2@s">
+                                    <div class="uk-grid-collapse uk-text-left param-text uk-width-1-1" uk-grid>
+                                        <div style="width: 60px;">Name: </div>
+                                        <div class="uk-width-expand uk-text-break">
+                                            <span class="property-name">${$parameter->getName()}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="uk-width-1-1 uk-width-1-2@s uk-flex uk-flex-left uk-flex-right@s uk-text-break tags-container" style="margin: 0!important;">
+                                        <span class="uk-label uk-label-success" style="text-transform: none">
+                                            {$parameter->getTypeHint()|buildLinkIfReflectionFound}
+                                            {if $parameter->isPassedByReference()}
+                                                &
+                                            {/if}
+                                        </span>
+                                    {if $parameter->isVariadic()}
+                                        <span class="uk-label uk-label-success">varidic</span>
+                                    {/if}
+                                    {if $parameter->isCallable()}
+                                        <span class="uk-label uk-label-success">callable</span>
+                                    {/if}
+                                </div>
+                            </div>
+                            {if $parameter->isDefaultValueAvailable()}
+                                <div class="uk-grid-collapse uk-text-left" uk-grid>
+                                    <div style="width: 60px;">Default: </div>
+                                    <div class="uk-width-expand uk-text-break">
+                                                <span class="property-name">
+                                                    {if $parameter->isArray() }
+                                                        The array data passed
+                                                    {else}
+                                                        {$parameter->getDefaultValue()|dumpDefaultValue|phpHighlight|noescape}
+                                                    {/if}
+                                                </span>
+                                    </div>
+                                </div>
+                            {/if}
+                            <div class="description uk-text-break">{$parameter->getDescription()}</div>
+                        </div>
+                    {/foreach}
+                {else}
+                    <div>oops, no parameters</div>
+                {/if}
+            </section>
+
+            <section class="return-info-container uk-margin-small-top">
+                <h4>Return Description</h4>
+                <h6>Return Type: {$method|callableReturnType}</h6>
+                {var $returnAnnotations = $method->getAnnotation("return")}
+                {if !empty($returnAnnotations)}
+                    {foreach $returnAnnotations as $return}
+                        <div class="return-description">{$return->getDescription()}</div>
+                    {/foreach}
+                {/if}
+            </section>
+            <div class="uk-text-small detail-description uk-margin-small-bottom uk-margin-small-top">
+                {$method|description}
+            </div>
             defined at <span class="uk-text-success">{$method->getStartLine() }</span> line of file <span class="uk-text-success">{$filename}</span>
         </div>
     </section>

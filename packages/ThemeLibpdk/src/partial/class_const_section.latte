@@ -2,7 +2,11 @@
 
 {define constItemSection}
     <section class="uk-grid-small list-item" uk-grid>
-        <div class="uk-width-1-1 uk-text-break tags-container">
+        <div class="uk-width-1-1 uk-width-1-2@s uk-text-break constant-name">
+            <a class="uk-text-break page-scroll-trigger" href="{$constant|linkReflection}" uk-scroll>{$constant->getName()}</a>
+            <span class="const-define uk-text-break uk-text-primary">{$constant->getValue()|dumpDefaultValue|phpHighlight|noescape}</span>
+        </div>
+        <div class="uk-width-1-1 uk-width-1-2@s uk-text-break tags-container uk-flex uk-flex-left uk-flex-right@s" style="margin: 0!important;">
             {if $inherit}
                 {var $inheritEntityName = ""}
                 {if method_exists($constant, "getDeclaringClassName") }
@@ -16,10 +20,6 @@
             {if $constant->isDeprecated() }
                 <span class="uk-label uk-label-danger">deprecated</span>
             {/if}
-        </div>
-        <div class="uk-width-1-1 uk-text-break constant-name">
-            <a class="uk-text-break page-scroll-trigger" href="{$constant|linkReflection}" uk-scroll>{$constant->getName()}</a>
-            <span class="const-define uk-text-break uk-text-primary">{$constant->getValue()|dumpDefaultValue|phpHighlight|noescape}</span>
         </div>
     </section>
 {/define}

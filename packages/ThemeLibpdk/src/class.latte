@@ -149,7 +149,13 @@
                                                                   "properties" => $properties["instance"]["protected"]}
 
                     {include "partial/class_method_info_section.latte", "title"=> "Public Static Methods",
-                                                                  "methods" => $properties["static"]["public"]}
+                                                                  "methods" => $methods["static"]["public"]}
+                    {include "partial/class_method_info_section.latte", "title"=> "Protected Static Methods",
+                                                                  "methods" => $methods["static"]["protected"]}
+                    {include "partial/class_method_info_section.latte", "title"=> "Public Instance Methods",
+                                                                  "methods" => $methods["instance"]["public"]}
+                    {include "partial/class_method_info_section.latte", "title"=> "Protected Instance Methods",
+                                                                  "methods" => $methods["instance"]["protected"]}
                     {include "partial/apigen_version.latte"}
                 </div>
             </div>

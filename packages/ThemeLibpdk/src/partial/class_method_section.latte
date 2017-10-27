@@ -4,7 +4,23 @@
 
 {define methodItemSection}
     <section class="uk-grid-small list-item" uk-grid>
-        <div class="uk-width-1-1 uk-text-break tags-container">
+        <div class="uk-width-1-1 uk-width-1-2@s uk-text-break signature">
+            <span class="return-type">{$method|callableReturnType}</span>
+            <a href="{$method|linkReflection}" uk-scroll>
+                {if isset($showSimpleName) && $showSimpleName}
+                    {$method->getShortName()}
+                {else}
+                    {$method->getName()}
+                {/if}
+            </a>
+            ({foreach $method->getParameters() as $parameter}
+            <span>
+            {$parameter->getTypeHint()|buildLinkIfReflectionFound}
+            <span class="callable-param-name">{if $parameter->isPassedByReference()}&amp; {/if}${$parameter->getName()}</span>
+            {if $parameter->isDefaultValueAvailable()} = {$parameter->getDefaultValue()|dumpDefaultValue|phpHighlight|noescape}{elseif $parameter->isVariadic()},…{/if}</span>{sep}, {/sep}
+            {/foreach})
+        </div>
+        <div class="uk-width-1-1 uk-width-1-2@s uk-text-break tags-container uk-flex uk-flex-left uk-flex-right@s">
             {if $inherit}
                 {var $inheritEntityName = ""}
                 {if method_exists($method, "getDeclaringClassName") }
@@ -22,23 +38,6 @@
                     <span class="uk-label uk-label-success">final</span>
                 {/if}
             {/if}
-
-        </div>
-        <div class="uk-width-1-1 uk-text-break signature">
-            <span class="return-type">{$method|callableReturnType}</span>
-            <a href="{$method|linkReflection}">
-                {if isset($showSimpleName) && $showSimpleName}
-                    {$method->getShortName()}
-                {else}
-                    {$method->getName()}
-                {/if}
-            </a>
-            ({foreach $method->getParameters() as $parameter}
-            <span>
-            {$parameter->getTypeHint()|buildLinkIfReflectionFound}
-            <span class="callable-param-name">{if $parameter->isPassedByReference()}&amp; {/if}${$parameter->getName()}</span>
-            {if $parameter->isDefaultValueAvailable()} = {$parameter->getDefaultValue()|dumpDefaultValue|phpHighlight|noescape}{elseif $parameter->isVariadic()},…{/if}</span>{sep}, {/sep}
-            {/foreach})
         </div>
     </section>
 {/define}

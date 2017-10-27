@@ -2,7 +2,11 @@
 
 {define traitPropertyItemSection}
     <div class="uk-grid-small list-item" uk-grid>
-        <div class="uk-width-1-1 uk-text-break tags-container">
+        <div class="uk-width-1-1 uk-width-1-2@s uk-text-break property-name">
+            <a class="uk-text-break page-scroll-trigger" href="{$traitProperty|linkReflection}">{$traitProperty->getName()}</a>
+            <span class="property-define uk-text-break uk-text-primary">{$traitProperty->getDefaultValue()|dumpDefaultValue|phpHighlight|noescape}</span>
+        </div>
+        <div class="uk-width-1-1 uk-width-1-2@s uk-text-break tags-container uk-flex uk-flex-left uk-flex-right@s" style="margin: 0!important;">
             {if $traitProperty->isDeprecated() }
                 <span class="uk-label uk-label-danger">deprecated</span>
             {/if}
@@ -19,10 +23,6 @@
             {if $traitProperty->isStatic()}
                 <span class="uk-label uk-label-success">static</span>
             {/if}
-        </div>
-        <div class="uk-width-1-1 uk-text-break property-name">
-            <a class="uk-text-break page-scroll-trigger" href="{$traitProperty|linkReflection}">{$traitProperty->getName()}</a>
-            <span class="property-define uk-text-break uk-text-primary">{$traitProperty->getDefaultValue()|dumpDefaultValue|phpHighlight|noescape}</span>
         </div>
     </div>
 {/define}
