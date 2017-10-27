@@ -68,8 +68,12 @@ final class ClassGenerator implements GeneratorInterface
                 'apiCatalog'=> $this->configuration->getOption('apicatalog'),
                 'constants' => $entities['consts'],
                 'inheritConstants' => $entities['inheritConsts'],
-                "properties" => $entities["properties"],
+                'properties' => $entities['properties'],
                 'inheritProperties' => $entities['inheritProperties'],
+                'methods' => $entities['methods'],
+                'inheritMethods' => $entities['inheritMethods'],
+                'traitProperties' => $entities['traitProperties'],
+                'traitMethods' => $entities['traitMethods']
             ]
         );
     }
@@ -124,7 +128,21 @@ final class ClassGenerator implements GeneratorInterface
                 )
             ),
             "inheritMethods" => array(
-            )
+                "static" => array(
+                    "public" => array(),
+                    "protected" => array(),
+                    "private" => array()
+                ),
+                "instance" => array(
+                    "public" => array(),
+                    "protected" => array(),
+                    "private" => array()
+                )
+            ),
+            "traitProperties" => array(
+            ),
+            "traitMethods" => array(
+            ),
         );
         // consts
         $publicConstArray = &$ret["consts"]["public"];
@@ -231,20 +249,49 @@ final class ClassGenerator implements GeneratorInterface
         $instanceInheritPublicMethods = &$ret["inheritMethods"]["instance"]["public"];
         $instanceInheritProtectedMethods = &$ret["inheritMethods"]["instance"]["protected"];
 
-        foreach ($classReflection->getInheritedMethods() as $name => $method) {
-//            if ($method->isStatic()) {
-//                if ($method->isPublic()) {
-//                    $staticInheritPublicMethods[] = $method;
-//                } else if ($method->isProtected()) {
-//                    $staticInheritProtectedMethods[] = $method;
-//                }
-//            } else {
-//                if ($method->isPublic()) {
-//                    $instanceInheritPublicMethods[] = $method;
-//                } else if ($method->isProtected()) {
-//                    $instanceInheritProtectedMethods[] = $method;
-//                }
-//            }
+        foreach ($classReflection->getInheritedMethods() as $name => $methods) {
+            foreach ($methods as $method) {
+                if ($method->isStatic()) {
+                    if ($method->isPublic()) {
+                        $staticInheritPublicMethods[] = $method;
+                    } else if ($method->isProtected()) {
+                        $staticInheritProtectedMethods[] = $method;
+                    }
+                } else {
+                    if ($method->isPublic()) {
+                        $instanceInheritPublicMethods[] = $method;
+                    } else if ($method->isProtected()) {
+                        $instanceInheritProtectedMethods[] = $method;
+                    }
+                }
+            }
+        }
+
+        $traitProperties = &$ret["traitProperties"];
+        // traits about
+        foreach ($classReflection->getTraits() as $trait) {
+            $traitName = $trait->getName();
+            if (!isset($traitProperties[$traitName])) {
+                $traitProperties[$traitName] = array();
+            }
+            foreach ($trait->getOwnProperties() as $property) {
+                $traitProperties[$traitName][] = $property;
+            }
+            if (empty($traitProperties[$traitName])) {
+                unset($traitProperties[$traitName]);
+            }
+        }
+
+        $traitMethods = &$ret["traitMethods"];
+
+        foreach ($classReflection->getTraits() as $trait) {
+            $traitName = $trait->getName();
+            if (!isset($traitProperties[$traitName])) {
+                $traitMethods[$traitName] = array();
+            }
+            foreach ($trait->getOwnMethods() as $method) {
+                $traitMethods[$traitName][] = $method;
+            }
         }
         return $ret;
     }

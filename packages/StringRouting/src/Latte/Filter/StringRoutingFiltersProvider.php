@@ -68,7 +68,53 @@ final class StringRoutingFiltersProvider implements FilterProviderInterface
 
                 return $className;
             },
+            'buildTraitLinkIfReflectionFound' => function (string $traitName) {
+                $reflection = $this->reflectionStorage->getTrait($traitName);
+                if ($reflection) {
+                    $link = Html::el('a');
+                    $link->setAttribute('href', $this->router->buildRoute(ReflectionRoute::NAME, $reflection));
+                    $link->setText($traitName);
+
+                    return $link;
+                }
+
+                return $traitName;
+            },
+
+            'callableReturnType' => function($callableReflection) {
+                $returnAnnotations = $callableReflection->getAnnotation("return");
+                $returnTypes = [];
+                if (!empty($returnAnnotations)) {
+                    foreach ($returnAnnotations as $return) {
+                        $rawReturnType = $return->getType()."";
+                        $partTypes = explode('|', $rawReturnType);
+                        foreach($partTypes as $type) {
+                            $returnTypes[] = ltrim($type, '\\');
+                        }
+                    }
+                }
+                if (empty($returnTypes)) {
+                    return "void";
+                }
+                foreach ($returnTypes as $key => $type) {
+                    $returnTypes[$key] = $this->buildLinkIfReflectionFound($type);
+                }
+                print implode('|', $returnTypes);
+            }
         ];
+    }
+    private function buildLinkIfReflectionFound (string $className)
+    {
+        $reflection = $this->reflectionStorage->getClassOrInterface($className);
+        if ($reflection) {
+            $link = Html::el('a');
+            $link->setAttribute('href', $this->router->buildRoute(ReflectionRoute::NAME, $reflection));
+            $link->setText($className);
+
+            return $link;
+        }
+
+        return $className;
     }
 
     /**

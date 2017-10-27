@@ -19,7 +19,7 @@
                 <span class="uk-label uk-label-danger">deprecated</span>
             {/if}
         </div>
-        <div class="uk-width-1-1 uk-text-break propertyant-name">
+        <div class="uk-width-1-1 uk-text-break property-name">
             <a class="uk-text-break page-scroll-trigger" href="{$property|linkReflection}">{$property->getName()}</a>
             <span class="property-define uk-text-break uk-text-primary">{$property->getDefaultValue()|dumpDefaultValue|phpHighlight|noescape}</span>
         </div>

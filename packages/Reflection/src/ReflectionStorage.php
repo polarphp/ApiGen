@@ -110,6 +110,11 @@ final class ReflectionStorage
         }
     }
 
+    public function getTrait(string $name): ?TraitReflectionInterface
+    {
+        return $this->traitReflections[$name] ?? null;
+    }
+
     /**
      * @return FunctionReflectionInterface[]
      */

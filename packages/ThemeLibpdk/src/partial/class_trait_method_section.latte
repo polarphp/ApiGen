@@ -1,0 +1,49 @@
+{var $methodSectionCls = !empty($methodPool) ? "section-item-container class-trait-method-section-container" : "uk-hidden" }
+
+{define traitMethodItemSection}
+    <div class="uk-grid-small list-item" uk-grid>
+        <div class="uk-width-1-1 uk-text-break tags-container">
+            {if $traitMethod->isDeprecated() }
+                <span class="uk-label uk-label-danger">deprecated</span>
+            {/if}
+            {if $traitMethod->isPublic() }
+                <span class="uk-label uk-label-success">public</span>
+            {elseif $traitMethod->isProtected()}
+                <span class="uk-label uk-label-success">protected</span>
+            {elseif $traitMethod->isPrivate()}
+                <span class="uk-label uk-label-success">private</span>
+            {/if}
+            {if $traitMethod->isFinal()}
+                <span class="uk-label uk-label-success">final</span>
+            {/if}
+            {if $traitMethod->isStatic()}
+                <span class="uk-label uk-label-success">static</span>
+            {/if}
+        </div>
+        <div class="uk-width-1-1 uk-text-break signature">
+            <span class="return-type">{$traitMethod|callableReturnType}</span>
+            <a href="{$traitMethod|linkReflection}" target="_blank">
+                {if isset($showSimpleName) && $showSimpleName}
+                    {$traitMethod->getShortName()}
+                {else}
+                    {$traitMethod->getName()}
+                {/if}
+            </a>
+            ({foreach $traitMethod->getParameters() as $parameter}
+            <span>
+            {$parameter->getTypeHint()|buildLinkIfReflectionFound}
+            <span class="callable-param-name">{if $parameter->isPassedByReference()}&amp; {/if}${$parameter->getName()}</span>
+            {if $parameter->isDefaultValueAvailable()} = {$parameter->getDefaultValue()|dumpDefaultValue|phpHighlight|noescape}{elseif $parameter->isVariadic()},…{/if}</span>{sep}, {/sep}
+            {/foreach})
+        </div>
+    </div>
+{/define}
+<div class="{$methodSectionCls}">
+    <h3>Trait Methods</h3>
+    {foreach $methodPool as $traitTempMethods}
+        <h5 class="from-trait-head">from: {$iterator->key()|buildTraitLinkIfReflectionFound}</h5>
+        {foreach $traitTempMethods as $traitMethod}
+            {include traitMethodItemSection, traitMethod => $traitMethod}
+        {/foreach}
+    {/foreach}
+</div>

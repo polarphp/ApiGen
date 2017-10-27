@@ -1,27 +1,31 @@
 {if !isset($isInterface)}{$isInterface = false}{/if}
 {if !isset($isClass)}{$isClass = false}{/if}
-{var $methods = $entity->getOwnMethods()}
-{var $methodSectionCls = !empty($methods) ? "section-item-container class-method-section-container" : "uk-hidden" }
+{var $methodSectionCls = !empty($methods) || !empty($inheritMethods) ? "section-item-container class-method-section-container" : "uk-hidden" }
 
 {define methodItemSection}
     <div class="uk-grid-small list-item" uk-grid>
         <div class="uk-width-1-1 uk-text-break tags-container">
-            {if $isClass}
-                {if $method->isPublic()}
-                    <span class="uk-label uk-label-success">public</span>
-                {elseif $method->isProtected()}
-                    <span class="uk-label uk-label-success">protected</span>
-                {elseif $method->isPrivate()}
-                    <span class="uk-label uk-label-success">private</span>
+            {if $inherit}
+                {var $inheritEntityName = ""}
+                {if method_exists($method, "getDeclaringClassName") }
+                    {php $inheritEntityName = $method->getDeclaringClassName()}
+                {elseif method_exists($method, "getDeclaringInterfaceName")}
+                    {php $inheritEntityName = $method->getDeclaringInterfaceName()}
                 {/if}
+                <span class="uk-label uk-label-success" style="text-transform: none">from: {$inheritEntityName|buildLinkIfReflectionFound}</span>
             {/if}
             {if $method->hasAnnotation("deprecated") }
-                <div class="uk-width-1-1 uk-text-break tags-container">
-                    <span class="uk-label uk-label-danger">deprecated</span>
-                </div>
+                <span class="uk-label uk-label-danger">deprecated</span>
             {/if}
+            {if $isClass}
+                {if $method->isFinal()}
+                    <span class="uk-label uk-label-success">final</span>
+                {/if}
+            {/if}
+
         </div>
         <div class="uk-width-1-1 uk-text-break signature">
+            <span class="return-type">{$method|callableReturnType}</span>
             <a href="{$method|linkReflection}" target="_blank">
                 {if isset($showSimpleName) && $showSimpleName}
                     {$method->getShortName()}
@@ -36,38 +40,27 @@
             {if $parameter->isDefaultValueAvailable()} = {$parameter->getDefaultValue()|dumpDefaultValue|phpHighlight|noescape}{elseif $parameter->isVariadic()},…{/if}</span>{sep}, {/sep}
             {/foreach})
         </div>
-        <div class="uk-width-1-1">
-            <div class="uk-text-break">
-                {*{if $constant instanceof \ApiGen\Reflection\Contract\Reflection\Partial\AnnotationsInterface && $constant->getDescription() != ""}*}
-                {*{$constant|description}*}
-                {*{elseif $constant->hasAnnotation("var") }*}
-                {*{var $varAnnotation = $constant->getAnnotation("var")}*}
-                {*{$varAnnotation[0]}*}
-                {*{/if}*}
-            </div>
-        </div>
     </div>
 {/define}
 <div class="{$methodSectionCls}">
-    <h3>Method List</h3>
+    <h3>{$title}</h3>
     {foreach $methods as $method}
-        {include methodItemSection, method => $method}
+        {include methodItemSection, method => $method, inherit => false}
     {/foreach}
-    {*{var $inheritConstants = $entity->getInheritedConstants()}*}
-    {*{if !empty($inheritConstants)}*}
-    {*<ul data-uk-accordion="multiple: true" class="inherits-container">*}
-    {*<li class="inherit-item">*}
-    {*<div class="uk-accordion-title uk-width-1-1 uk-text-middle uk-text-left">*}
-    {*<span class="uk-text-break">*}
-    {*view inherit constants*}
-    {*</span>*}
-    {*</div>*}
-    {*<div class="uk-accordion-content">*}
-    {*{foreach $inheritConstants as $constant}*}
-    {*{include constItemSection, constant => $constant}*}
-    {*{/foreach}*}
-    {*</div>*}
-    {*</li>*}
-    {*</ul>*}
-    {*{/if}*}
+    {if !empty($inheritMethods)}
+        <ul data-uk-accordion="multiple: true" class="inherits-container">
+            <li class="inherit-item">
+                <div class="uk-accordion-title uk-width-1-1 uk-text-middle uk-text-left">
+                    <span class="uk-text-break">
+                        view inherit methods
+                    </span>
+                </div>
+                <div class="uk-accordion-content">
+                    {foreach $inheritMethods as $method}
+                        {include methodItemSection, method => $method, inherit => true}
+                    {/foreach}
+                </div>
+            </li>
+        </ul>
+    {/if}
 </div>
