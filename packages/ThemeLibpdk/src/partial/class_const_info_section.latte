@@ -1,6 +1,7 @@
 {var $constSectionCls = !empty($constants) ? "section-item-container class-const-info-section-container" : "uk-hidden" }
 
 {define constItemSection}
+    <a id="{$constant->getName()}"></a>
     <section class="uk-grid-small list-item" uk-grid>
         <div class="uk-width-1-1 uk-text-break tags-container">
             <span class="uk-label uk-label-success" style="text-transform: none">{$constant->getTypeHint()|buildLinkIfReflectionFound}</span>
@@ -8,7 +9,6 @@
                 <span class="uk-label uk-label-danger">deprecated</span>
             {/if}
         </div>
-        <a id="{$constant->getName()}"></a>
         <div class="uk-width-1-1 uk-text-break constant-name">
             <a href="#{$constant->getName()}"><img src="/statics/images/apidocs/php/link.svg"/></a>
             <span class="uk-text-break">{$constant->getName()}</span>
@@ -26,6 +26,6 @@
 <div class="{$constSectionCls}">
     <h3>{$title}</h3>
     {foreach $constants as $constant}
-        {include constItemSection, constant => $constant, inherit => false}
+        {include constItemSection, constant => $constant}
     {/foreach}
 </div>

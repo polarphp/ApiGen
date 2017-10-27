@@ -3,7 +3,7 @@
 {var $methodSectionCls = !empty($methods) || !empty($inheritMethods) ? "section-item-container class-method-section-container" : "uk-hidden" }
 
 {define methodItemSection}
-    <div class="uk-grid-small list-item" uk-grid>
+    <section class="uk-grid-small list-item" uk-grid>
         <div class="uk-width-1-1 uk-text-break tags-container">
             {if $inherit}
                 {var $inheritEntityName = ""}
@@ -26,7 +26,7 @@
         </div>
         <div class="uk-width-1-1 uk-text-break signature">
             <span class="return-type">{$method|callableReturnType}</span>
-            <a href="{$method|linkReflection}" target="_blank">
+            <a href="{$method|linkReflection}">
                 {if isset($showSimpleName) && $showSimpleName}
                     {$method->getShortName()}
                 {else}
@@ -40,7 +40,7 @@
             {if $parameter->isDefaultValueAvailable()} = {$parameter->getDefaultValue()|dumpDefaultValue|phpHighlight|noescape}{elseif $parameter->isVariadic()},…{/if}</span>{sep}, {/sep}
             {/foreach})
         </div>
-    </div>
+    </section>
 {/define}
 <div class="{$methodSectionCls}">
     <h3>{$title}</h3>

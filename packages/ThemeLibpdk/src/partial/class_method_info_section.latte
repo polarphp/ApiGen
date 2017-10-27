@@ -1,0 +1,18 @@
+{var $propertySectionCls = !empty($methods)  ? "section-item-container class-method-info-section-container" : "uk-hidden" }
+
+{define methodItemSection}
+    <a id="{$method->getName()}"></a>
+    <section class="uk-grid-small list-item" uk-grid>
+        <div class="uk-text-break defined-file-location uk-width-1-1">
+            {var $filename = str_replace(getcwd()."/src/", "", $method->getDeclaringClass()->getFileName()) }
+            
+            defined at <span class="uk-text-success">{$method->getStartLine() }</span> line of file <span class="uk-text-success">{$filename}</span>
+        </div>
+    </section>
+{/define}
+<div class="{$propertySectionCls}">
+    <h3>{$title}</h3>
+    {foreach $methods as $method}
+        {include methodItemSection, method => $method}
+    {/foreach}
+</div>

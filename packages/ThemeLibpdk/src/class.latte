@@ -123,6 +123,14 @@
                                                                    "methods" => $methods["static"]["protected"],
                                                                    "inheritMethods" => $inheritMethods["static"]["protected"],
                                                                    "isClass" => true}
+                    {include "partial/class_method_section.latte", "title"=> "Public Instance Methods",
+                                                                   "methods" => $methods["instance"]["public"],
+                                                                   "inheritMethods" => $inheritMethods["instance"]["public"],
+                                                                   "isClass" => true}
+                    {include "partial/class_method_section.latte", "title"=> "Protected Instance Methods",
+                                                                   "methods" => $methods["instance"]["protected"],
+                                                                   "inheritMethods" => $inheritMethods["instance"]["protected"],
+                                                                   "isClass" => true}
                     {include "partial/class_trait_property_section.latte", propertyPool => $traitProperties}
                     {include "partial/class_trait_method_section.latte", methodPool => $traitMethods}
 
@@ -131,6 +139,17 @@
                                                                         "constants" => $constants["public"]}
                     {include "partial/class_const_info_section.latte", "title"=> "Protected Constants",
                                                                         "constants" => $constants["protected"]}
+                    {include "partial/class_property_info_section.latte", "title"=> "Public Static Properties",
+                                                                  "properties" => $properties["static"]["public"]}
+                    {include "partial/class_property_info_section.latte", "title"=> "Protected Static Properties",
+                                                                  "properties" => $properties["static"]["protected"]}
+                    {include "partial/class_property_info_section.latte", "title"=> "Public Instance Properties",
+                                                                  "properties" => $properties["instance"]["public"]}
+                    {include "partial/class_property_info_section.latte", "title"=> "Protected Instance Properties",
+                                                                  "properties" => $properties["instance"]["protected"]}
+
+                    {include "partial/class_method_info_section.latte", "title"=> "Public Static Methods",
+                                                                  "methods" => $properties["static"]["public"]}
                     {include "partial/apigen_version.latte"}
                 </div>
             </div>

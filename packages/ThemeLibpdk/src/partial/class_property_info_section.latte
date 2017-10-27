@@ -1,0 +1,33 @@
+{var $propertySectionCls = !empty($properties)  ? "section-item-container class-property-info-section-container" : "uk-hidden" }
+
+{define propertyItemSection}
+    <a id="class_property_{$property->getName()}"></a>
+    <section class="uk-grid-small list-item" uk-grid>
+        <div class="uk-width-1-1 uk-text-break tags-container">
+            {if $property->getTypeHint()}
+                <span class="uk-label uk-label-success" style="text-transform: none">{$property->getTypeHint()|buildLinkIfReflectionFound}</span>
+            {/if}
+            {if $property->isDeprecated() }
+                <span class="uk-label uk-label-danger">deprecated</span>
+            {/if}
+        </div>
+        <div class="uk-width-1-1 uk-text-break property-name">
+            <a href="{$property|linkReflection}"><img src="/statics/images/apidocs/php/link.svg"/></a>
+            <span class="uk-text-break">{$property->getName()}</span>
+            <span class="property-define uk-text-break uk-text-primary">{$property->getDefaultValue()|dumpDefaultValue|phpHighlight|noescape}</span>
+        </div>
+        <div class="uk-text-small uk-text-break uk-margin-small-bottom uk-margin-small-top uk-width-1-1">
+            {$property|description}
+        </div>
+        <div class="uk-text-break defined-file-location uk-width-1-1">
+            {var $filename = str_replace(getcwd()."/src/", "", $property->getDeclaringClass()->getFileName()) }
+            defined at <span class="uk-text-success">{$property->getStartLine() }</span> line of file <span class="uk-text-success">{$filename}</span>
+        </div>
+    </section>
+{/define}
+<div class="{$propertySectionCls}">
+    <h3>{$title}</h3>
+    {foreach $properties as $property}
+        {include propertyItemSection, property => $property}
+    {/foreach}
+</div>

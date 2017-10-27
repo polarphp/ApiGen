@@ -64,7 +64,7 @@ final class ReflectionRoute implements RouteInterface
             }
 
             if ($reflection instanceof ClassPropertyReflectionInterface) {
-                $anchorPrefix = '$';
+                $anchorPrefix = 'class_property_';
             }
 
             return $class . '#' . $anchorPrefix . NamingHelper::nameToFilePath($reflection->getName());
