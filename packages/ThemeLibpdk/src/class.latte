@@ -28,46 +28,74 @@
                             oops, currrent description is empty
                         {/if}
                     </div>
-                    {*{if $interface->getOwnInterfaces()}*}
-                    {*<div class="section-item-container implements-section-item-container">*}
-                    {*<h3>Implements interfaces</h3>*}
-                    {*{foreach $interface->getOwnInterfaces() as $ownInterface}*}
-                    {*<div class="uk-grid-small list-item" uk-grid>*}
-                    {*<div class="uk-width-1-1 uk-text-break tags-container">*}
-                    {*{if $interface->isDeprecated() }*}
-                    {*<span class="uk-label uk-label-danger">deprecated</span>*}
-                    {*{/if}*}
-                    {*</div>*}
-                    {*<div class="uk-width-1-1 uk-width-1-4@s">*}
-                    {*<a href="{$ownInterface|linkReflection}" class="uk-text-break">{$ownInterface->getName()}</a>*}
-                    {*</div>*}
-                    {*<div class="uk-width-1-1 uk-width-3-4@s">*}
-                    {*<span>*}{*<%- item.briefDescription %>*}{*</span>*}
-                    {*</div>*}
-                    {*</div>*}
-                    {*{/foreach}*}
-                    {*</div>*}
-                    {*{/if}*}
-                    {*{if $interface->getImplementers()}*}
-                    {*<div class="section-item-container implements-section-item-container uk-margin-small-top">*}
-                    {*<h3>Known implementers</h3>*}
-                    {*{foreach $interface->getImplementers() as $implementer}*}
-                    {*<div class="uk-grid-small list-item" uk-grid>*}
-                    {*<div class="uk-width-1-1 uk-text-break tags-container">*}
-                    {*{if $implementer->isDeprecated() }*}
-                    {*<span class="uk-label uk-label-danger">deprecated</span>*}
-                    {*{/if}*}
-                    {*</div>*}
-                    {*<div class="uk-width-1-1 uk-width-1-4@s">*}
-                    {*<a href="{$implementer|linkReflection}" class="uk-text-break">{$implementer->getName()}</a>*}
-                    {*</div>*}
-                    {*<div class="uk-width-1-1 uk-width-3-4@s">*}
-                    {*<span>*}{*<%- item.briefDescription %>*}{*</span>*}
-                    {*</div>*}
-                    {*</div>*}
-                    {*{/foreach}*}
-                    {*</div>*}
-                    {*{/if}*}
+                    {if $class->getParentClass()}
+                        <div class="section-item-container parentclass-section-item-container uk-margin-small-bottom">
+                            <h3>Parent Class</h3>
+                            {if $class->getParentClass()->isDeprecated()}
+                                <div class="uk-width-1-1 uk-text-break tags-container">
+                                    <span class="uk-label uk-label-danger">deprecated</span>
+                                </div>
+                            {/if}
+                            <div style="margin-top: 5px;">
+                                <a href="{$class->getParentClass()|linkReflection}">
+                                    {$class->getParentClass()->getName()}
+                                </a>
+                            </div>
+                        </div>
+                    {/if}
+                    {if $class->getOwnInterfaces()}
+                        <div class="section-item-container implements-section-item-container uk-margin-small-bottom">
+                            <h3>Implements Interfaces</h3>
+                            {foreach $class->getOwnInterfaces() as $ownInterface}
+                                <div class="uk-grid-small list-item" uk-grid>
+                                    <div class="uk-width-1-1 uk-text-break tags-container">
+                                        {if $ownInterface->isDeprecated() }
+                                            <span class="uk-label uk-label-danger">deprecated</span>
+                                        {/if}
+                                    </div>
+                                    <div class="uk-width-1-1 uk-width-1-4@s">
+                                        <a href="{$ownInterface|linkReflection}" class="uk-text-break">{$ownInterface->getName()}</a>
+                                    </div>
+                                </div>
+                            {/foreach}
+                        </div>
+                    {/if}
+
+                    {if $class->getTraits()}
+                        <div class="section-item-container traits-section-item-container uk-margin-small-bottom">
+                            <h3>Uses Traits</h3>
+                            {foreach $class->getTraits() as $trait}
+                                <div class="uk-grid-small list-item" uk-grid>
+                                    <div class="uk-width-1-1 uk-text-break tags-container">
+                                        {if $trait->isDeprecated() }
+                                            <span class="uk-label uk-label-danger">deprecated</span>
+                                        {/if}
+                                    </div>
+                                    <div class="uk-width-1-1 uk-width-1-4@s">
+                                        <a href="{$trait|linkReflection}" class="uk-text-break">{$trait->getName()}</a>
+                                    </div>
+                                </div>
+                            {/foreach}
+                        </div>
+                    {/if}
+
+                    {if $class->getSubClasses()}
+                        <div class="section-item-container subclass-section-item-container uk-margin-small-bottom">
+                            <h3>Known Subclasses</h3>
+                            {foreach $class->getSubClasses() as $subclass}
+                                <div class="uk-grid-small list-item" uk-grid>
+                                    <div class="uk-width-1-1 uk-text-break tags-container">
+                                        {if $subclass->isDeprecated() }
+                                            <span class="uk-label uk-label-danger">deprecated</span>
+                                        {/if}
+                                    </div>
+                                    <div class="uk-width-1-1 uk-width-1-4@s">
+                                        <a href="{$subclass|linkReflection}" class="uk-text-break">{$subclass->getName()}</a>
+                                    </div>
+                                </div>
+                            {/foreach}
+                        </div>
+                    {/if}
 
                     {*{include "partial/class_const_section.latte", "entity" => $class}*}
                     {*{include "partial/class_method_section.latte", "entity" => $class, "isInterface" => true}*}

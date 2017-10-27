@@ -23,11 +23,11 @@
                     {/if}
                     {if $interface->getOwnInterfaces()}
                         <div class="section-item-container implements-section-item-container">
-                            <h3>Implements interfaces</h3>
+                            <h3>Implements Interfaces</h3>
                             {foreach $interface->getOwnInterfaces() as $ownInterface}
                                 <div class="uk-grid-small list-item" uk-grid>
                                     <div class="uk-width-1-1 uk-text-break tags-container">
-                                        {if $interface->isDeprecated() }
+                                        {if $ownInterface->isDeprecated() }
                                             <span class="uk-label uk-label-danger">deprecated</span>
                                         {/if}
                                     </div>
