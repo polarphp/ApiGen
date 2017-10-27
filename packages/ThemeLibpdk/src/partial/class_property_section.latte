@@ -1,0 +1,49 @@
+{var $propertySectionCls = !empty($properties) || !empty($inheritProperties) ? "section-item-container class-property-section-container" : "uk-hidden" }
+
+{define propertyItemSection}
+    <div class="uk-grid-small list-item" uk-grid>
+        <div class="uk-width-1-1 uk-text-break tags-container">
+            {if $inherit}
+                {var $inheritEntityName = ""}
+                {if method_exists($property, "getDeclaringClassName") }
+                    {php $inheritEntityName = $property->getDeclaringClassName()}
+                {elseif method_exists($property, "getDeclaringInterfaceName")}
+                    {php $inheritEntityName = $property->getDeclaringInterfaceName()}
+                {/if}
+                <span class="uk-label uk-label-success" style="text-transform: none">from: {$inheritEntityName|buildLinkIfReflectionFound}</span>
+            {/if}
+            {if $property->getTypeHint()}
+                <span class="uk-label uk-label-success" style="text-transform: none">{$property->getTypeHint()|buildLinkIfReflectionFound}</span>
+            {/if}
+            {if $property->isDeprecated() }
+                <span class="uk-label uk-label-danger">deprecated</span>
+            {/if}
+        </div>
+        <div class="uk-width-1-1 uk-text-break propertyant-name">
+            <a class="uk-text-break page-scroll-trigger" href="{$property|linkReflection}">{$property->getName()}</a>
+            <span class="property-define uk-text-break uk-text-primary">{$property->getDefaultValue()|dumpDefaultValue|phpHighlight|noescape}</span>
+        </div>
+    </div>
+{/define}
+<div class="{$propertySectionCls}">
+    <h3>{$title}</h3>
+    {foreach $properties as $property}
+        {include propertyItemSection, property => $property, inherit => false}
+    {/foreach}
+    {if !empty($inheritProperties)}
+        <ul data-uk-accordion="multiple: true" class="inherits-container">
+            <li class="inherit-item">
+                <div class="uk-accordion-title uk-width-1-1 uk-text-middle uk-text-left">
+            <span class="uk-text-break">
+            view inherited properties
+            </span>
+                </div>
+                <div class="uk-accordion-content">
+                    {foreach $inheritProperties as $property}
+                        {include propertyItemSection, property => $property, inherit => true}
+                    {/foreach}
+                </div>
+            </li>
+        </ul>
+    {/if}
+</div>

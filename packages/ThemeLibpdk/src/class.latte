@@ -97,7 +97,24 @@
                         </div>
                     {/if}
 
-                    {*{include "partial/class_const_section.latte", "entity" => $class}*}
+                    {include "partial/class_const_section.latte", "title"=> "Public Constants",
+                                                                  "constants" => $constants["public"],
+                                                                  "inheritConstants" => $inheritConstants["public"]}
+                    {include "partial/class_const_section.latte", "title"=> "Protected Constants",
+                                                                  "constants" => $constants["protected"],
+                                                                  "inheritConstants" => $inheritConstants["protected"]}
+                    {include "partial/class_property_section.latte", "title"=> "Public Static Properties",
+                                                                  "properties" => $properties["static"]["public"],
+                                                                  "inheritProperties" => $inheritProperties["static"]["public"]}
+                    {include "partial/class_property_section.latte", "title"=> "Protected Static Properties",
+                                                                  "properties" => $properties["static"]["protected"],
+                                                                  "inheritProperties" => $inheritProperties["static"]["protected"]}
+                    {include "partial/class_property_section.latte", "title"=> "Public Instance Properties",
+                                                                  "properties" => $properties["instance"]["public"],
+                                                                  "inheritProperties" => $inheritProperties["instance"]["public"]}
+                    {include "partial/class_property_section.latte", "title"=> "Protected Instance Properties",
+                                                                  "properties" => $properties["instance"]["protected"],
+                                                                  "inheritProperties" => $inheritProperties["instance"]["protected"]}
                     {*{include "partial/class_method_section.latte", "entity" => $class, "isInterface" => true}*}
                     {include "partial/apigen_version.latte"}
                 </div>
