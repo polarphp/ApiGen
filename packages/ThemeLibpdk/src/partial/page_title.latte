@@ -1,0 +1,27 @@
+{var $pageTitle = ""}
+{if $activePage == "index"}
+    {php $pageTitle = "Welcome to visit libpdk php API documentation page"}
+{elseif $activePage == "globals"}
+    {php $pageTitle = "The global definitions of libpdk framework"}
+{elseif $activePage == "namespaces"}
+    {php $pageTitle = "The namespaces catalog of libpdk framework"}
+{elseif $activePage == "functions"}
+    {php $pageTitle = "The all functions of libpdk framework"}
+{elseif $activePage == "classes"}
+    {php $pageTitle = "The all classes of libpdk framework"}
+{elseif $activePage == "interfaces"}
+    {php $pageTitle = "The all interfaces of libpdk framework"}
+{elseif $activePage == "traits"}
+    {php $pageTitle = "The all traits of libpdk framework"}
+{elseif $activePage == "namespace"}
+    {php $pageTitle = "Namespace $activeNamespace detail description page"}
+{elseif $activePage == "class"}
+    {php $pageTitle = "Class {$class->getName()} detail description page"}
+{elseif $activePage == "interface"}
+    {php $pageTitle = "Interface {$interface->getName()} detail description page"}
+{elseif $activePage == "trait"}
+    {php $pageTitle = "Trait {$trait->getName()} detail description page"}
+{elseif $activePage == "function"}
+    {php $pageTitle = "Function {$function->getName()} detail description page"}
+{/if}
+<title>{$pageTitle}</title>
