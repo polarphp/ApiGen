@@ -1,7 +1,12 @@
+{if !isset($isClass)}{$isClass = false}{/if}
+{if !isset($isTrait)}{$isTrait = false}{/if}
 {var $propertySectionCls = !empty($properties)  ? "section-item-container class-property-info-section-container" : "uk-hidden" }
-
 {define propertyItemSection}
-    <a id="class_property_{$property->getName()}"></a>
+    {if $isClass}
+        <a id="class_property_{$property->getName()}"></a>
+    {elseif $isTrait}
+        <a id="trait_property_{$property->getName()}"></a>
+    {/if}
     <section class="uk-grid-small list-item" uk-grid>
         <div class="uk-grid-small uk-width-1-1" uk-grid>
             <div class="uk-width-1-1 uk-width-1-2@s uk-text-break property-name">
@@ -16,13 +21,31 @@
                 {if $property->isDeprecated() }
                     <span class="uk-label uk-label-danger">deprecated</span>
                 {/if}
+                {if $isTrait}
+                    {if $property->isPublic()}
+                        <span class="uk-label uk-label-success">public</span>
+                    {elseif $property->isProtected()}
+                        <span class="uk-label uk-label-success">protected</span>
+                    {elseif $property->isPrivate()}
+                        <span class="uk-label uk-label-success">private</span>
+                    {/if}
+                    {if $property->isStatic()}
+                        <span class="uk-label uk-label-success">static</span>
+                    {/if}
+                {/if}
             </div>
         </div>
         <div class="uk-text-break uk-margin-small-bottom uk-margin-small-top uk-width-1-1 property-description">
             {$property|description}
         </div>
+        {var $filename = ""}
+        {if $isClass}
+            {php $filename = $property->getDeclaringClass()->getFileName() }
+        {elseif $isTrait}
+            {php $filename = $property->getDeclaringTrait()->getFileName() }
+        {/if}
         <div class="uk-text-break defined-file-location uk-width-1-1">
-            {var $filename = str_replace(getcwd()."/src/", "", $property->getDeclaringClass()->getFileName()) }
+            {php $filename = str_replace(getcwd()."/src/", "", $filename) }
             defined at <span class="uk-text-success">{$property->getStartLine() }</span> line of file <span class="uk-text-success">{$filename}</span>
         </div>
     </section>

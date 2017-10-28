@@ -1,0 +1,112 @@
+{layout '@layout.latte'}
+{block content}
+    <div id="container" style="width: 100%">
+        <div class="uk-container uk-margin-small-top uk-margin-small-bottom phpapidoc-page-container phpapidoc-trait-content-page">
+            <div class="phpapidoc-container uk-flex uk-flex-left">
+                <div class="side-panel-container uk-visible@m">
+                    {include "partial/api_catalog.latte"}
+                </div>
+                <div class="uk-width-expand phpapidoc-info-container phpapidoc-trait-content-info-container">
+                    {include "partial/namespace_path.latte", "namespace" => $trait->getNamespaceName(), "showAll" => true}
+                    <div class="uk-width-1-1 uk-text-break tags-container">
+                        {if $trait->isDeprecated() }
+                            <span class="uk-label uk-label-danger">deprecated</span>
+                        {/if}
+                    </div>
+                    <h3 class="title uk-text-break">{$trait->getName()}</h3>
+                    {var $description = $trait->getDescription() }
+                    <div class="uk-text-small uk-text-break uk-margin-small-bottom uk-margin-small-top">
+                        {if $description != ""}
+                            {$trait|description}
+                        {else}
+                            oops, currrent description is empty
+                        {/if}
+                    </div>
+
+                    {if $trait->getTraits()}
+                        <div class="section-item-container implements-section-item-container uk-margin-small-bottom">
+                            <h3>Uses Traits</h3>
+                            {foreach $trait->getTraits() as $ownTrait}
+                                <div class="uk-grid-small list-item" uk-grid>
+                                    <div class="uk-width-1-1 uk-width-1-2@s">
+                                        <a href="{$ownTrait|linkReflection}" class="uk-text-break">{$ownTrait->getName()}</a>
+                                    </div>
+                                    <div class="uk-width-1-1 uk-width-1-2@s uk-text-break tags-container uk-flex uk-flex-left uk-flex-right@s">
+                                        {if $ownTrait->isDeprecated() }
+                                            <span class="uk-label uk-label-danger">deprecated</span>
+                                        {/if}
+                                    </div>
+                                </div>
+                            {/foreach}
+                        </div>
+                    {/if}
+
+                    {if $trait->getUsers()}
+                        <div class="section-item-container traits-section-item-container uk-margin-small-bottom">
+                            <h3>Uses Traits</h3>
+                            {foreach $trait->getUsers() as $clienttrait}
+                                <div class="uk-grid-small list-item" uk-grid>
+                                    <div class="uk-width-1-1 uk-width-1-2@s">
+                                        <a href="{$clienttrait|linkReflection}" class="uk-text-break">{$clienttrait->getName()}</a>
+                                    </div>
+                                    <div class="uk-width-1-1 uk-width-1-2@s uk-text-break tags-container uk-flex uk-flex-left uk-flex-right@s">
+                                        {if $clienttrait->isDeprecated() }
+                                            <span class="uk-label uk-label-danger">deprecated</span>
+                                        {/if}
+                                    </div>
+                                </div>
+                            {/foreach}
+                        </div>
+                    {/if}
+                    {include "partial/class_property_section.latte", "title"=> "Trait Properties",
+                                                                  "properties" => $trait->getOwnProperties(),
+                                                                  "inheritProperties" => [],
+                                                                  "isTrait" => true}
+
+                    {include "partial/class_method_section.latte", "title"=> "Trait Methods",
+                                                                   "methods" => $trait->getOwnMethods(),
+                                                                   "inheritMethods" => [],
+                                                                   "isTrait" => true}
+                    <h2 class="uk-margin-medium-top uk-margin-small-bottom">Detail Description Sections</h2>
+                    {include "partial/class_property_info_section.latte", "title"=> "Trait Properties",
+                                                                  "properties" => $trait->getOwnProperties(),
+                                                                  "isTrait" => true}
+                    {include "partial/class_method_info_section.latte", "title"=> "Trait Methods",
+                                                                  "methods" => $trait->getOwnMethods(),
+                                                                  "isTrait" => true}
+                    {include "partial/apigen_version.latte"}
+                </div>
+            </div>
+        </div>
+    </div>
+    <script n:syntax="off">
+        $(document).ready(function ()
+        {
+            if (location.hash.trim().length > 0) {
+                var target = $(location.hash);
+                if (target.length > 0) {
+                    $('html,body')
+                            .stop()
+                            .animate({scrollTop: Math.round($(location.hash).offset().top)}, 0);
+                }
+            }
+            $(".page-scroll-trigger").each(function(){
+                var targetUrl = $(this).attr('href');
+                var parts = targetUrl.split('#');
+                if (parts) {
+                    targetUrl = parts[0];
+                }
+                if (targetUrl == location.pathname) {
+                    UIkit.scroll(this);
+                    $(this).on('scrolled', function () {
+                        location.hash = parts[1];
+                    });
+                }
+            });
+            $(".detail-description table").each(function ()
+            {
+                $(this).addClass("uk-table uk-table-divider uk-table-small uk-table-striped");
+            });
+        });
+    </script>
+{/block}

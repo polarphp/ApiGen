@@ -9,6 +9,7 @@
                     {include "partial/api_catalog.latte"}
                 </div>
                 <div class="uk-width-expand phpapidoc-info-container phpapidoc-function-content-info-container">
+                    {include "partial/namespace_path.latte", "namespace" => $function->getNamespaceName(), "showAll" => true}
                     {if $function->hasAnnotation("deprecated") }
                         <div class="uk-width-1-1 uk-text-break tags-container">
                             <span class="uk-label uk-label-danger">deprecated</span>

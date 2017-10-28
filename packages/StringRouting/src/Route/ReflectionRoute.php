@@ -89,7 +89,7 @@ final class ReflectionRoute implements RouteInterface
             }
 
             if ($reflection instanceof TraitPropertyReflectionInterface) {
-                $anchorPrefix = '$';
+                $anchorPrefix = 'trait_property_';
             }
 
             return $trait . '#' . $anchorPrefix . NamingHelper::nameToFilePath($reflection->getName());

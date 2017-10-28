@@ -144,13 +144,17 @@
                                                                        "constants" => $constants["protected"],
                                                                        "isClass" => true}
                     {include "partial/class_property_info_section.latte", "title"=> "Public Static Properties",
-                                                                  "properties" => $properties["static"]["public"]}
+                                                                  "properties" => $properties["static"]["public"],
+                                                                  "isClass" => true}
                     {include "partial/class_property_info_section.latte", "title"=> "Protected Static Properties",
-                                                                  "properties" => $properties["static"]["protected"]}
+                                                                  "properties" => $properties["static"]["protected"],
+                                                                  "isClass" => true}
                     {include "partial/class_property_info_section.latte", "title"=> "Public Instance Properties",
-                                                                  "properties" => $properties["instance"]["public"]}
+                                                                  "properties" => $properties["instance"]["public"],
+                                                                  "isClass" => true}
                     {include "partial/class_property_info_section.latte", "title"=> "Protected Instance Properties",
-                                                                  "properties" => $properties["instance"]["protected"]}
+                                                                  "properties" => $properties["instance"]["protected"],
+                                                                  "isClass" => true}
 
                     {include "partial/class_method_info_section.latte", "title"=> "Public Static Methods",
                                                                   "methods" => $methods["static"]["public"],

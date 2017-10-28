@@ -1,3 +1,5 @@
+{if !isset($isTrait)}{$isTrait = false}{/if}
+{if !isset($isClass)}{$isClass = false}{/if}
 {var $propertySectionCls = !empty($properties) || !empty($inheritProperties) ? "section-item-container class-property-section-container" : "uk-hidden" }
 
 {define propertyItemSection}
@@ -7,6 +9,9 @@
             <span class="property-define uk-text-break uk-text-primary">{$property->getDefaultValue()|dumpDefaultValue|phpHighlight|noescape}</span>
         </div>
         <div class="uk-width-1-1 uk-width-1-2@s uk-text-break tags-container uk-flex uk-flex-left uk-flex-right@s">
+            {if $property->isDeprecated() }
+                <span class="uk-label uk-label-danger">deprecated</span>
+            {/if}
             {if $inherit}
                 {var $inheritEntityName = ""}
                 {if method_exists($property, "getDeclaringClassName") }
@@ -16,11 +21,20 @@
                 {/if}
                 <span class="uk-label uk-label-success" style="text-transform: none">from: {$inheritEntityName|buildLinkIfReflectionFound}</span>
             {/if}
+            {if $isTrait}
+                {if $property->isPublic()}
+                    <span class="uk-label uk-label-success">public</span>
+                {elseif $property->isProtected()}
+                    <span class="uk-label uk-label-success">protected</span>
+                {elseif $property->isPrivate()}
+                    <span class="uk-label uk-label-success">private</span>
+                {/if}
+                {if $property->isStatic()}
+                    <span class="uk-label uk-label-success">static</span>
+                {/if}
+            {/if}
             {if $property->getTypeHint()}
                 <span class="uk-label uk-label-success" style="text-transform: none">{$property->getTypeHint()|buildLinkIfReflectionFound}</span>
-            {/if}
-            {if $property->isDeprecated() }
-                <span class="uk-label uk-label-danger">deprecated</span>
             {/if}
         </div>
     </div>

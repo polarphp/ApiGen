@@ -1,5 +1,6 @@
 {if !isset($isInterface)}{$isInterface = false}{/if}
 {if !isset($isClass)}{$isClass = false}{/if}
+{if !isset($isTrait)}{$isTrait = false}{/if}
 {var $propertySectionCls = !empty($methods)  ? "section-item-container class-method-info-section-container" : "uk-hidden" }
 {define methodItemSection}
     <a id="_{$method->getName()}"></a>
@@ -11,11 +12,11 @@
                     <a href="{$method|linkReflection}"><img src="/statics/images/apidocs/php/link.svg"/></a>
                     <span class="uk-text-break">{$method->getName()}()</span>
                 </div>
-                <div class="uk-width-1-1 uk-width-1-2@s uk-text-break tags-container uk-flex uk-flex-left uk-flex-right@s " style="margin: 0!important;">
+                <div class="uk-width-1-1 uk-width-1-2@s uk-text-break tags-container uk-flex uk-flex-left uk-flex-right@s" style="margin: 0!important;">
                     {if $method->isDeprecated() }
                         <span class="uk-label uk-label-danger">deprecated</span>
                     {/if}
-                    {if $isClass}
+                    {if $isClass || $isTrait}
                         {if $method->isPublic()}
                             <span class="uk-label uk-label-success">public</span>
                         {elseif $method->isProtected()}

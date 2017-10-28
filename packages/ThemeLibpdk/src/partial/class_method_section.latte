@@ -1,5 +1,6 @@
 {if !isset($isInterface)}{$isInterface = false}{/if}
 {if !isset($isClass)}{$isClass = false}{/if}
+{if !isset($isTrait)}{$isTrait = false}{/if}
 {var $methodSectionCls = !empty($methods) || !empty($inheritMethods) ? "section-item-container class-method-section-container" : "uk-hidden" }
 
 {define methodItemSection}
@@ -33,9 +34,24 @@
             {if $method->hasAnnotation("deprecated") }
                 <span class="uk-label uk-label-danger">deprecated</span>
             {/if}
-            {if $isClass}
+            {if $isTrait}
+                {if $method->isPublic()}
+                    <span class="uk-label uk-label-success">public</span>
+                {elseif $method->isProtected()}
+                    <span class="uk-label uk-label-success">protected</span>
+                {elseif $method->isPrivate()}
+                    <span class="uk-label uk-label-success">private</span>
+                {/if}
+                {if $method->isStatic()}
+                    <span class="uk-label uk-label-success">static</span>
+                {/if}
+            {/if}
+            {if $isClass || $isTrait }
                 {if $method->isFinal()}
                     <span class="uk-label uk-label-success">final</span>
+                {/if}
+                {if $method->isAbstract()}
+                    <span class="uk-label uk-label-success">abstract</span>
                 {/if}
             {/if}
         </div>
