@@ -3,12 +3,7 @@
     <h3>Function List</h3>
     {foreach $functions as $function}
         <div class="uk-grid-small list-item" uk-grid>
-            {if $function->hasAnnotation("deprecated") }
-                <div class="uk-width-1-1 uk-text-break tags-container">
-                    <span class="uk-label uk-label-danger">deprecated</span>
-                </div>
-            {/if}
-            <div class="uk-width-1-1 uk-text-break signature">
+            <div class="uk-width-1-1 uk-width-1-2@s uk-text-break signature">
                 <a href="{$function|linkReflection}" target="_blank">
                     {if isset($showSimpleName) && $showSimpleName}
                         {$function->getShortName()}
@@ -23,9 +18,11 @@
                 {if $parameter->isDefaultValueAvailable()} = {$parameter->getDefaultValue()|dumpDefaultValue|phpHighlight|noescape}{elseif $parameter->isVariadic()},…{/if}</span>{sep}, {/sep}
                 {/foreach})
             </div>
-            <div class="uk-width-1-1 uk-width-3-4@s uk-text-break">
-                <span>{$function|description}</span>
-            </div>
+            {if $function->hasAnnotation("deprecated") }
+                <div class="uk-width-1-1 uk-width-1-2@s uk-text-break tags-container uk-flex uk-flex-left uk-flex-right@s">
+                    <span class="uk-label uk-label-danger">deprecated</span>
+                </div>
+            {/if}
         </div>
     {/foreach}
 </div>

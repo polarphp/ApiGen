@@ -3,8 +3,18 @@
     <h3>Class List</h3>
     {foreach $classes as $class}
         <div class="uk-grid-small list-item" data-uk-grid>
+            <div class="uk-width-1-1 uk-width-1-2@s">
+                <span class="entity-type uk-text-right">class</span>
+                <a class="uk-text-break" href = "{$class|linkReflection}">
+                    {if isset($showSimpleName) && $showSimpleName}
+                        {$class->getShortName()}
+                    {else}
+                        {$class->getName()}
+                    {/if}
+                </a>
+            </div>
             {if $class->isAbstract() || $class->isFinal() || $class->isDeprecated() }
-                <div class="uk-width-1-1 uk-flex uk-flex-left tags-container">
+                <div class="uk-width-1-1 uk-width-1-2@s uk-flex uk-flex-left tags-container uk-flex uk-flex-left uk-flex-right@s">
                     {if $class->isAbstract() }
                         <span class="uk-label uk-label-success">abstract</span>
                     {/if}
@@ -16,19 +26,7 @@
                     {/if}
                 </div>
             {/if}
-            <div class="uk-width-1-1">
-                <span class="entity-type uk-text-right">class</span>
-                <a class="uk-text-break" href = "{$class|linkReflection}">
-                    {if isset($showSimpleName) && $showSimpleName}
-                        {$class->getShortName()}
-                    {else}
-                        {$class->getName()}
-                    {/if}
-                </a>
-            </div>
-            <div class="uk-width-1-1">
-                <span>{$class|description}</span>
-            </div>
         </div>
+
     {/foreach}
 </div>

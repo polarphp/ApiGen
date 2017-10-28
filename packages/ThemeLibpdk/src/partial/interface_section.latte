@@ -3,12 +3,7 @@
     <h3>Interface List</h3>
     {foreach $interfaces as $interface}
         <div class="uk-grid-small list-item" data-uk-grid>
-            {if $interface->isDeprecated() }
-                <div class="uk-width-1-1 uk-flex uk-flex-left tags-container">
-                    <span class="uk-label uk-label-danger">deprecated</span>
-                </div>
-            {/if}
-            <div class="uk-width-1-1">
+            <div class="uk-width-1-1 uk-width-1-2@s">
                 <span class="entity-type uk-text-right">interface</span>
                 <a class="uk-text-break" href = "{$interface|linkReflection}">
                     {if isset($showSimpleName) && $showSimpleName}
@@ -18,9 +13,11 @@
                     {/if}
                 </a>
             </div>
-            <div class="uk-width-1-1">
-                <span>{$interface|description}</span>
-            </div>
+            {if $interface->isDeprecated() }
+                <div class="uk-width-1-1 uk-width-1-2@s uk-flex uk-flex-left tags-container uk-flex uk-flex-left uk-flex-right@s">
+                    <span class="uk-label uk-label-danger">deprecated</span>
+                </div>
+            {/if}
         </div>
     {/foreach}
 </div>
