@@ -1,4 +1,10 @@
 {
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://packagist.phpcomposer.com"
+        }
+    },
     "name": "apigen/apigen",
     "description": "PHP 7.1 source code API generator.",
     "license": "MIT",
@@ -11,7 +17,7 @@
     "bin": ["bin/apigen"],
     "require": {
         "php": "^7.1",
-        "roave/better-reflection": "dev-master#c87d856",
+        "roave/better-reflection": "dev-master",
         "kukulich/fshl": "^2.1",
 
         "latte/latte": "^2.4",
@@ -28,12 +34,6 @@
         "symplify/package-builder": "^2.2",
         "psr/container": "^1.0",
         "zendframework/zend-code": "^3.1"
-    },
-    "require-dev": {
-        "tracy/tracy": "^2.4",
-        "phpunit/phpunit": "^6.0",
-        "phpstan/phpstan": "^0.8",
-        "symplify/easy-coding-standard": "2.3.1"
     },
     "autoload": {
         "psr-4": {
